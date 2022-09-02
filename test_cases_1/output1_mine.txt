@@ -1,0 +1,2 @@
+Terminal: +, *, (, ), id
+Non terminal: E, EPrime, T, TPrime, F
