@@ -1,2 +1,0 @@
-Terminal: a, b
-Non terminal: A, B, C, D

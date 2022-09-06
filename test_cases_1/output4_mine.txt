@@ -1,2 +1,0 @@
-Terminal: or, and, not, (, ), true, false
-Non terminal: bexpr, bterm, bfactor
