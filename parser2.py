@@ -25,14 +25,32 @@ def setToString(set, separator):
     return resultString[:-len(separator)]
 
 def header(production):
+    '''
+    Returns the header portion of a grammar's production
+    Arguments:
+        production: a python list of tokens representing a production
+    Returns:
+        The production's header as a string
+    '''
     return production[0]
 
 def body(production):
+    '''
+    Returns the body portion of a grammar's production
+    Arguments:
+        production: a python list of tokens representing a production
+    Returns:
+        The production's body as a list of tokenss
+    '''
     return production[2:]
 
 def firstsOfNonTerm(nonTerminal):
     '''
-    Return the set of firsts of a non terminal
+    Calculates and stores the set of firsts of a non terminal
+    Arguments:
+        nonTerminal: a grammar's non terminal symbol as a string
+    Returns:
+        The set of firsts for the non terminal
     '''
     # Return stored set of firsts if its been calculated already
     if len(firsts[nonTerminal]) != 0:
@@ -47,6 +65,10 @@ def firstsOfNonTerm(nonTerminal):
 def firstsOfString(string):
     '''
     Return the set of firsts of a string
+    Arguments:
+        string: a python list of grammar symbols
+    Returns:
+        The set of firsts for the sequence of symbols
     '''
     stringFirsts = set()
     for i in range(len(string)):
@@ -64,7 +86,11 @@ def firstsOfString(string):
 
 def followsOfNonTerm(nonTerminal):
     '''
-    Return the sets of follows for a non terminal
+    Calculates and stores the sets of follows for a non terminal
+    Arguments:
+        nonTerminal: a grammar's non terminal symbol as a string
+    Returns:
+        The set of follows for the non terminal
     '''
     # Return stored set of follows if its been calculated already
     if len(follows[nonTerminal]) != 0 and follows[nonTerminal] != {EOF}:
@@ -137,8 +163,6 @@ for nonTerminal in nonTerminals:
 follows[startNonTerm].add(EOF)
 for nonTerminal in nonTerminals:
     followsOfNonTerm(nonTerminal)
-
-# Validate LL analizable
 
 # Show sets
 for nonTerminal in nonTerminals:
