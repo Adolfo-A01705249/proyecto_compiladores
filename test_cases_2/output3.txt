@@ -1,0 +1,5 @@
+A => FIRST = {a,b}, FOLLOW = {$}
+B => FIRST = {b}, FOLLOW = {$}
+C => FIRST = {b}, FOLLOW = {$}
+D => FIRST = {' '}, FOLLOW = {$}
+LL(1)? No
