@@ -1,0 +1,3 @@
+goal => FIRST = {(, a, b}, FOLLOW = {$}
+A => FIRST = {(, a, b}, FOLLOW = {$, )}
+two => FIRST = {a, b}, FOLLOW = {$, )}
