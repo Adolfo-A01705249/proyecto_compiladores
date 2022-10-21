@@ -5,15 +5,17 @@
 # Author: Adolfo Acosta Castro [A01705249]
 # Date: 2022/10/05
 
-from math import prod
 import sys
-from turtle import dot
 
+EPSILON = "\'e\'"
+EPSILON_FOR_PRINT = "\' \'"
+EOF = "$"
+DOT = "."
+SHIFT = "S"
+REDUCE = "R"
+ACCEPT = "AC"
 
-EPSILON = '\'e\''
-EPSILON_FOR_PRINT = '\' \''
-EOF ='$'
-DOT = '.'
+DEBUG_PRINT = True
 
 class Queue:
     values = []
@@ -34,25 +36,33 @@ class ProductionWithDot:
     production = None
     dotIndex = None # Index of symbol that is right after the dot
 
-    def __init__(self, production):
+    def __init__(self, production, dotIntex = 2):
         self.production = production
-        self.dotIndex = 2
+        self.dotIndex = dotIntex
 
     def underlined(self):
         '''
         Returns the symbol after the dot or None 
         if dot is at the end of the production
         '''
-        if self.dotIndex < len(self.production):
+        if not self.completed():
             return self.production[self.dotIndex]
         else:
             return None
 
     def advanceDot(self):
-        self.dotIndex += 1
+        '''
+        Returns a copy of the object with the 
+        dot one positiono ahead
+        '''
+        advancedProduction = ProductionWithDot(self.production, self.dotIndex + 1)
+        return advancedProduction
 
     def completed(self):
         return (not self.dotIndex < len(self.production))
+
+    def production(self):
+        return self.production
 
     def __eq__(self, other):
         if isinstance(other, ProductionWithDot):
@@ -63,6 +73,19 @@ class ProductionWithDot:
 
     def __ne__(self, other):
         return (not self.__eq__(other))
+
+    def __hash__(self):
+        productionWithDotTuple = (tuple(self.production), self.dotIndex)
+        return hash(productionWithDotTuple)
+
+    def __str__(self):
+        separator = " "
+        stringRep = separator.join(self.production[:self.dotIndex])
+        stringRep += separator + DOT + separator
+        if not self.completed():
+            stringRep += separator.join(self.production[self.dotIndex:])
+
+        return stringRep
 
 
 def setToString(set, separator):
@@ -172,6 +195,11 @@ def followsOfNonTerm(nonTerminal):
 
     return follows[nonTerminal]
 
+def insertIntoDict(aDict, key, value):
+    if not key in aDict.keys():
+        aDict[key] = value
+    else:
+        sys.exit(f"Overlap in table cell")
 
 # Parse input productions into lists of tokens
 productions = []
@@ -243,63 +271,73 @@ itemQueue.insert(newItemIndex)
 while not itemQueue.empty():
     itemIndex = itemQueue.remove()
 
+    print(f"\n\nItem #{itemIndex}")
     # Duplicate productions from kernel into list for convenience
     itemProductions.append([])
+    print("-------------------------------")
+    print("Kernel: ")
     for productionWithDot in itemKernels[itemIndex]:
+        print(productionWithDot)
         itemProductions[itemIndex].append(productionWithDot)
 
     # Add productions of non-terminals with dot before them to item
+    print("-------------------------------")
+    print("Whole list: ")
     i = 0
     while i < len(itemProductions[itemIndex]):
         productionWithDot = itemProductions[itemIndex][i]
+        print(productionWithDot)
         underlinedSymbol = productionWithDot.underlined()
         if underlinedSymbol in nonTerminals:
             for production in productionsOf[underlinedSymbol]:
-                itemProductions[itemIndex].append(ProductionWithDot(production))
+                newProductionWithDot = ProductionWithDot(production)
+                if newProductionWithDot not in itemProductions[itemIndex]:
+                    itemProductions[itemIndex].append(newProductionWithDot)
         i += 1  
 
     # Derive for each terminal and non-terminal
+    print("-------------------------------")
+    print("Transitions: ")
     itemTransitions.append(dict())
 
     for symbol in symbols:
         derivedKernel = set()
         for productionWithDot in itemProductions[itemIndex]:
             if productionWithDot.underlined() == symbol:
-                advancedProduction = productionWithDot.copy()
-                advancedProduction.advanceDot()
+                advancedProduction = productionWithDot.advanceDot()
                 derivedKernel.add(advancedProduction)
 
+        if len(derivedKernel) == 0:
+            continue
+
+        destinationIndex = -1
         if not derivedKernel in itemKernels:
             # Create brand new item and store connection to it
             itemKernels.append(derivedKernel)
             newItemIndex = len(itemKernels) - 1
             itemQueue.insert(newItemIndex)
-            itemTransitions[itemIndex][symbol] = newItemIndex
+            destinationIndex = newItemIndex
+            
         else:
-            # Store connection to old item
             oldItemIndex = itemKernels.index(derivedKernel)
-            itemTransitions[itemIndex][symbol] = oldItemIndex
+            destinationIndex = oldItemIndex
+
+        itemTransitions[itemIndex][symbol] = destinationIndex
+        print(f"Under {symbol} moves to {destinationIndex}")
 
             
-# Build table from tree
-    # rule 1-gotos- 
-    #   for each item
-    #       for each nonterm transition
-    #           put the # of destination item in cell [item#][nonterm]
-    # rule 2-AC
-    #   in cell [# of item where artificial prod completes][$] add AC
-    # rule 3-shift
-    #   for each item
-    #       for each term transition
-    #           put the S + # of destination item in cell [item#][nonterm]
-    # rule 4- reduce
-    #   DONE get first and follows
-    #   for each item
-    #       for each prod that completes
-    #           put R + # of prod that completes in cell [item#][follows of completed prod's header]
+# Store shift actions
+itemActions = []
+for itemIndex in range(len(itemKernels)):
+    itemActions.append(dict())
+    for symbol in itemTransitions[itemIndex].keys():
+        if symbol in terminals:
+            terminal = symbol
+            destinationIndex = itemTransitions[itemIndex][terminal]
+            itemActions[itemIndex][terminal] = (SHIFT, destinationIndex)
 
 # Get firsts and follows of each non-terminal
-firsts = dict()
+'''firsts = dict()
 follows = dict()
 
 for nonTerminal in nonTerminals:
@@ -311,7 +349,20 @@ for nonTerminal in nonTerminals:
 
 follows[startNonTerm].add(EOF)
 for nonTerminal in nonTerminals:
-    followsOfNonTerm(nonTerminal)
+    followsOfNonTerm(nonTerminal)'''
 
+# Store reduce and accepted actions
+for itemIndex in range(len(itemKernels)):
+    for productionWithDot in itemKernels[itemIndex]:
+        if productionWithDot.completed():
+            production = productionWithDot.production()
+            productionIndex = productions.index(production)
+            
+            if productionIndex == 0:
+                insertIntoDict(itemActions[itemIndex], EOF, (ACCEPT, None))
 
+            else:
+                for follow in follows[header(production)]:
+                    insertIntoDict(itemActions[itemIndex], follow, (REDUCE, productionIndex))
+                
 # Parse string with table
