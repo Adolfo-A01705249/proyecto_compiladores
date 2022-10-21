@@ -15,7 +15,7 @@ SHIFT = "S"
 REDUCE = "R"
 ACCEPT = "AC"
 
-DEBUG_PRINT = True
+UNIQUE_TOKEN = "A01705249"
 
 class Queue:
     values = []
@@ -201,9 +201,12 @@ def insertIntoDict(aDict, key, value):
     else:
         sys.exit(f"Overlap in table cell")
 
+
 # Parse input productions into lists of tokens
 productions = []
-n = int(input().strip())
+parameters = input().strip().split()
+n = int(parameters[0])
+m = int(parameters[1])
 
 for i in range(n):
     line = input().strip()
@@ -240,6 +243,23 @@ for production in productions:
 symbols = terminals.union(nonTerminals)
 
 
+# Get firsts and follows of each non-terminal
+firsts = dict()
+follows = dict()
+
+for nonTerminal in nonTerminals:
+    firsts[nonTerminal] = set()
+    follows[nonTerminal] = set()
+
+for nonTerminal in nonTerminals:
+    firstsOfNonTerm(nonTerminal)
+
+startNonTerm = header(productions[0])
+follows[startNonTerm].add(EOF)
+for nonTerminal in nonTerminals:
+    followsOfNonTerm(nonTerminal)
+
+
 # Make dictionary of productions organized by non-terminal 
 productionsOf = dict()
 for nonTerminal in nonTerminals:
@@ -251,8 +271,7 @@ for production in productions:
     
 
 # Create new production that recognizes the grammar
-startNonTerm = header(productions[0])
-artificialProduction = ["A01705249", "->", startNonTerm]
+artificialProduction = [UNIQUE_TOKEN, "->", startNonTerm]
 productions.insert(0, artificialProduction)
 
 # Insert new production into kernel of item 0
@@ -336,21 +355,6 @@ for itemIndex in range(len(itemKernels)):
             destinationIndex = itemTransitions[itemIndex][terminal]
             itemActions[itemIndex][terminal] = (SHIFT, destinationIndex)
 
-# Get firsts and follows of each non-terminal
-'''firsts = dict()
-follows = dict()
-
-for nonTerminal in nonTerminals:
-    firsts[nonTerminal] = set()
-    follows[nonTerminal] = set()
-
-for nonTerminal in nonTerminals:
-    firstsOfNonTerm(nonTerminal)
-
-follows[startNonTerm].add(EOF)
-for nonTerminal in nonTerminals:
-    followsOfNonTerm(nonTerminal)'''
-
 # Store reduce and accepted actions
 for itemIndex in range(len(itemKernels)):
     for productionWithDot in itemKernels[itemIndex]:
@@ -366,3 +370,10 @@ for itemIndex in range(len(itemKernels)):
                     insertIntoDict(itemActions[itemIndex], follow, (REDUCE, productionIndex))
                 
 # Parse string with table
+'''stack = [0]
+while True:'''
+
+
+# Qs
+# Do we need to account for recursive grammar's (affects first & follows)
+# Do we need to validate overlap in table cell
