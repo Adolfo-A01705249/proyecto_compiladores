@@ -1,0 +1,13 @@
+12
+C -> P F class id X Y
+P -> public
+P -> ' '	
+F -> final 
+F -> ' '	
+X -> extends id 
+X -> ' '	
+Y -> implements I
+Y -> ' '
+I -> id J
+J -> , I
+J -> ' '	

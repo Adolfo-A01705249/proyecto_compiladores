@@ -5,6 +5,7 @@
 # Author: Adolfo Acosta Castro [A01705249]
 # Date: 2022/10/05
 
+from re import A
 import sys
 
 EPSILON = "\'e\'"
@@ -123,6 +124,19 @@ def body(production):
     '''
     return production[2:]
 
+def top(stack):
+    '''
+    Returns the top-most value of a stack
+    Arguments:
+        stack: a python list
+    Returns:
+        The element on the last position of the list
+    '''
+    if not len(stack) > 0:
+        sys.exit("Error: no more tokens inside of stack.")
+
+    stack[-1]
+
 def firstsOfNonTerm(nonTerminal):
     '''
     Calculates and stores the set of firsts of a non terminal
@@ -199,16 +213,21 @@ def insertIntoDict(aDict, key, value):
     if not key in aDict.keys():
         aDict[key] = value
     else:
-        sys.exit(f"Overlap in table cell")
+        sys.exit(f"Error: overlap in table cell")
 
+def retrieveFromDict(aDict, key):
+    if key in aDict.keys():
+        return aDict[key]
+    else:
+        sys.exit(f"Error: required action doesn't exist.")
 
 # Parse input productions into lists of tokens
 productions = []
 parameters = input().strip().split()
-n = int(parameters[0])
-m = int(parameters[1])
+numberOfProductions = int(parameters[0])
+numberOfStrings = int(parameters[1])
 
-for i in range(n):
+for i in range(numberOfProductions):
     line = input().strip()
 
     # Change epsilon representation
@@ -244,7 +263,7 @@ symbols = terminals.union(nonTerminals)
 
 
 # Get firsts and follows of each non-terminal
-firsts = dict()
+'''firsts = dict()
 follows = dict()
 
 for nonTerminal in nonTerminals:
@@ -252,12 +271,12 @@ for nonTerminal in nonTerminals:
     follows[nonTerminal] = set()
 
 for nonTerminal in nonTerminals:
-    firstsOfNonTerm(nonTerminal)
+    firstsOfNonTerm(nonTerminal)'''
 
 startNonTerm = header(productions[0])
-follows[startNonTerm].add(EOF)
+'''follows[startNonTerm].add(EOF)
 for nonTerminal in nonTerminals:
-    followsOfNonTerm(nonTerminal)
+    followsOfNonTerm(nonTerminal)'''
 
 
 # Make dictionary of productions organized by non-terminal 
@@ -346,7 +365,7 @@ while not itemQueue.empty():
 
             
 # Store shift actions
-itemActions = []
+'''itemActions = []
 for itemIndex in range(len(itemKernels)):
     itemActions.append(dict())
     for symbol in itemTransitions[itemIndex].keys():
@@ -369,10 +388,37 @@ for itemIndex in range(len(itemKernels)):
                 for follow in follows[header(production)]:
                     insertIntoDict(itemActions[itemIndex], follow, (REDUCE, productionIndex))
                 
-# Parse string with table
-'''stack = [0]
-while True:'''
 
+# Parse input strings into lists of tokens
+strings = []
+for i in range(numberOfStrings):
+    string = input().strip()
+    tokenList = string.split()
+    tokenList.append(EOF)
+    strings.append(tokenList)'''
+
+# Parse strings with table
+'''stack = [0]
+for i in range(numberOfStrings):
+    string = strings[i].reverse()
+    j = 0
+    while True:
+        itemIndex = top(stack)
+        stringToken = top(string)
+        action = retrieveFromDict(itemActions[itemIndex], stringToken)
+
+        actionType = itemActions[itemIndex][stringToken][0]
+        actionParameter = itemActions[itemIndex][stringToken][1]
+
+        if action == SHIFT:
+            
+        elif action == REDUCE:
+            
+        elif action == ACCEPT:
+            print(f"{strings[i]} accepted")
+            break
+            '''
+            
 
 # Qs
 # Do we need to account for recursive grammar's (affects first & follows)
