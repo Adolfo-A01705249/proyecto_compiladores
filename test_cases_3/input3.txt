@@ -11,4 +11,4 @@ Y -> ' '
 I -> id J
 J -> , I
 J -> ' '
-public class id implements id, id	
+public class id implements id , id	

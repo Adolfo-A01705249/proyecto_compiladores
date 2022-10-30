@@ -7,6 +7,8 @@
 
 import sys
 
+from sklearn import tree
+
 EPSILON = '\' \''
 EOF ='$'
 BODY_START_INDEX = 2
@@ -60,6 +62,8 @@ class ProductionWithDot:
         return advancedProduction
 
     def completed(self):
+        if self.production[BODY_START_INDEX] == EPSILON:
+            return True
         return (not self.dotIndex < len(self.production))
 
     def getProduction(self):
@@ -123,6 +127,19 @@ def body(production):
         The production's body as a list of tokenss
     '''
     return production[2:]
+
+def bodyLength(production):
+    '''
+    Returns the number of tokens in the body of a production 
+    or 0 if the production only derives in epsilon.
+    Arguments:
+        production: a well-formed list of tokens
+    Returns:
+        The length as specified above
+    '''
+    if production[BODY_START_INDEX] == EPSILON:
+        return 0
+    return (len(production) - 2)
 
 def top(stack):
     '''
@@ -613,9 +630,8 @@ for i in range(numberOfStrings):
 
         elif actionType == REDUCE:
             print(f"reduce {actionParameter}")
-            bodyLength = len(body(productions[actionParameter]))
-            tokensToRemove = 2 * bodyLength
-            for i in range(tokensToRemove):
+            tokensToRemove = 2 * bodyLength(productions[actionParameter])
+            for j in range(tokensToRemove):
                 top(stack)
                 stack.pop()
             topIndex = top(stack)        
@@ -633,3 +649,4 @@ for i in range(numberOfStrings):
             
 # Qs
 # Do we need to validate overlap in table cell
+# How to process epsilon prods in SLR tree generation

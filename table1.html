@@ -30,13 +30,13 @@ Transitions:
 Item #2
 -------------------------------
 Kernel: 
-S -> S . S *
 A01705249 -> S . 
+S -> S . S *
 S -> S . S +
 -------------------------------
 Whole list: 
-S -> S . S *
 A01705249 -> S . 
+S -> S . S *
 S -> S . S +
 S -> . S S *
 S -> . S S +
@@ -50,34 +50,34 @@ Under S moves to 3
 Item #3
 -------------------------------
 Kernel: 
+S -> S . S +
 S -> S . S *
 S -> S S . *
-S -> S . S +
 S -> S S . +
 -------------------------------
 Whole list: 
+S -> S . S +
 S -> S . S *
 S -> S S . *
-S -> S . S +
 S -> S S . +
 S -> . S S *
 S -> . S S +
 S -> . a
 -------------------------------
 Transitions: 
+Under * moves to 4
 Under a moves to 1
-Under + moves to 4
 Under S moves to 3
-Under * moves to 5
+Under + moves to 5
 
 
 Item #4
 -------------------------------
 Kernel: 
-S -> S S + . 
+S -> S S * . 
 -------------------------------
 Whole list: 
-S -> S S + . 
+S -> S S * . 
 -------------------------------
 Transitions: 
 
@@ -85,10 +85,10 @@ Transitions:
 Item #5
 -------------------------------
 Kernel: 
-S -> S S * . 
+S -> S S + . 
 -------------------------------
 Whole list: 
-S -> S S * . 
+S -> S S + . 
 -------------------------------
 Transitions: 
 <!DOCTYPE html>
@@ -137,29 +137,59 @@ Transitions:
 </tr>
 <tr>
 	<td> 3 </td>
-	<td> S5 </td>
 	<td> S4 </td>
+	<td> S5 </td>
 	<td> S1 </td>
 	<td>  </td>
 	<td> 3 </td>
 </tr>
 <tr>
 	<td> 4 </td>
-	<td> R2 </td>
-	<td> R2 </td>
-	<td> R2 </td>
-	<td> R2 </td>
+	<td> R1 </td>
+	<td> R1 </td>
+	<td> R1 </td>
+	<td> R1 </td>
 	<td>  </td>
 </tr>
 <tr>
 	<td> 5 </td>
-	<td> R1 </td>
-	<td> R1 </td>
-	<td> R1 </td>
-	<td> R1 </td>
+	<td> R2 </td>
+	<td> R2 </td>
+	<td> R2 </td>
+	<td> R2 </td>
 	<td>  </td>
 </tr>
 </table>
 </body>
 </html>
 
+
+checking string a a + a * a * a +:
+shift 1
+reduce 3
+goto 2
+shift 1
+reduce 3
+goto 3
+shift 5
+reduce 2
+goto 2
+shift 1
+reduce 3
+goto 3
+shift 4
+reduce 1
+goto 2
+shift 1
+reduce 3
+goto 3
+shift 4
+reduce 1
+goto 2
+shift 1
+reduce 3
+goto 3
+shift 5
+reduce 2
+goto 2
+string a a + a * a * a + accepted
