@@ -1,0 +1,592 @@
+
+
+Item #0
+-------------------------------
+Kernel: 
+A01705249 -> . C
+-------------------------------
+Whole list: 
+A01705249 -> . C
+C -> . P F class id X Y
+P -> . public
+P -> . ' '
+-------------------------------
+Transitions: 
+Under P moves to 1
+Under C moves to 2
+Under public moves to 3
+
+
+Item #1
+-------------------------------
+Kernel: 
+C -> P . F class id X Y
+-------------------------------
+Whole list: 
+C -> P . F class id X Y
+F -> . final
+F -> . ' '
+-------------------------------
+Transitions: 
+Under final moves to 4
+Under F moves to 5
+
+
+Item #2
+-------------------------------
+Kernel: 
+A01705249 -> C . 
+-------------------------------
+Whole list: 
+A01705249 -> C . 
+-------------------------------
+Transitions: 
+
+
+Item #3
+-------------------------------
+Kernel: 
+P -> public . 
+-------------------------------
+Whole list: 
+P -> public . 
+-------------------------------
+Transitions: 
+
+
+Item #4
+-------------------------------
+Kernel: 
+F -> final . 
+-------------------------------
+Whole list: 
+F -> final . 
+-------------------------------
+Transitions: 
+
+
+Item #5
+-------------------------------
+Kernel: 
+C -> P F . class id X Y
+-------------------------------
+Whole list: 
+C -> P F . class id X Y
+-------------------------------
+Transitions: 
+Under class moves to 6
+
+
+Item #6
+-------------------------------
+Kernel: 
+C -> P F class . id X Y
+-------------------------------
+Whole list: 
+C -> P F class . id X Y
+-------------------------------
+Transitions: 
+Under id moves to 7
+
+
+Item #7
+-------------------------------
+Kernel: 
+C -> P F class id . X Y
+-------------------------------
+Whole list: 
+C -> P F class id . X Y
+X -> . extends id
+X -> . ' '
+-------------------------------
+Transitions: 
+Under X moves to 8
+Under extends moves to 9
+
+
+Item #8
+-------------------------------
+Kernel: 
+C -> P F class id X . Y
+-------------------------------
+Whole list: 
+C -> P F class id X . Y
+Y -> . implements I
+Y -> . ' '
+-------------------------------
+Transitions: 
+Under implements moves to 10
+Under Y moves to 11
+
+
+Item #9
+-------------------------------
+Kernel: 
+X -> extends . id
+-------------------------------
+Whole list: 
+X -> extends . id
+-------------------------------
+Transitions: 
+Under id moves to 12
+
+
+Item #10
+-------------------------------
+Kernel: 
+Y -> implements . I
+-------------------------------
+Whole list: 
+Y -> implements . I
+I -> . id J
+-------------------------------
+Transitions: 
+Under id moves to 13
+Under I moves to 14
+
+
+Item #11
+-------------------------------
+Kernel: 
+C -> P F class id X Y . 
+-------------------------------
+Whole list: 
+C -> P F class id X Y . 
+-------------------------------
+Transitions: 
+
+
+Item #12
+-------------------------------
+Kernel: 
+X -> extends id . 
+-------------------------------
+Whole list: 
+X -> extends id . 
+-------------------------------
+Transitions: 
+
+
+Item #13
+-------------------------------
+Kernel: 
+I -> id . J
+-------------------------------
+Whole list: 
+I -> id . J
+J -> . , I
+J -> . ' '
+-------------------------------
+Transitions: 
+Under , moves to 15
+Under J moves to 16
+
+
+Item #14
+-------------------------------
+Kernel: 
+Y -> implements I . 
+-------------------------------
+Whole list: 
+Y -> implements I . 
+-------------------------------
+Transitions: 
+
+
+Item #15
+-------------------------------
+Kernel: 
+J -> , . I
+-------------------------------
+Whole list: 
+J -> , . I
+I -> . id J
+-------------------------------
+Transitions: 
+Under id moves to 13
+Under I moves to 17
+
+
+Item #16
+-------------------------------
+Kernel: 
+I -> id J . 
+-------------------------------
+Whole list: 
+I -> id J . 
+-------------------------------
+Transitions: 
+
+
+Item #17
+-------------------------------
+Kernel: 
+J -> , I . 
+-------------------------------
+Whole list: 
+J -> , I . 
+-------------------------------
+Transitions: 
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel='stylesheet' href='styles.css'>
+	<title> SLR table </title>
+</head>
+<body>
+<table>
+<tr>
+	<th> </th>
+	<th colspan = 8> ACTIONS </th>
+	<th colspan = 7> GOTO </th>
+</tr>
+<tr>
+	<th> </th>
+	<th> , </th>
+	<th> class </th>
+	<th> extends </th>
+	<th> final </th>
+	<th> id </th>
+	<th> implements </th>
+	<th> public </th>
+	<th> $ </th>
+	<th> C </th>
+	<th> F </th>
+	<th> I </th>
+	<th> J </th>
+	<th> P </th>
+	<th> X </th>
+	<th> Y </th>
+</tr><tr>
+	<td> 0 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> S3 </td>
+	<td>  </td>
+	<td> 2 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> 1 </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 1 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> S4 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> 5 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 2 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> AC </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 3 </td>
+	<td>  </td>
+	<td> R2 </td>
+	<td>  </td>
+	<td> R2 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 4 </td>
+	<td>  </td>
+	<td> R4 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 5 </td>
+	<td>  </td>
+	<td> S6 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 6 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> S7 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 7 </td>
+	<td>  </td>
+	<td>  </td>
+	<td> S9 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> 8 </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 8 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> S10 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> 11 </td>
+</tr>
+<tr>
+	<td> 9 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> S12 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 10 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> S13 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> 14 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 11 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> R1 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 12 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> R6 </td>
+	<td>  </td>
+	<td> R6 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 13 </td>
+	<td> S15 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> 16 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 14 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> R8 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 15 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> S13 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> 17 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 16 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> R10 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 17 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> R11 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+</table>
+</body>
+</html>
+
+
+checking string public class id implements id, id:
+shift 3
+reduce 2
+goto 1

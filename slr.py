@@ -133,7 +133,7 @@ def top(stack):
         The element on the last position of the list
     '''
     if not len(stack) > 0:
-        sys.exit("Error: no more tokens inside of stack.")
+        sys.exit("Error: no more tokens in stack or string.")
 
     return stack[-1]
 
@@ -295,6 +295,10 @@ def getHtmlDoc(table):
     doc += "<body>\n" + table + "</body>\n"
     doc += "</html>\n"
     return doc
+
+def checkTokenInGrammar(token):
+    if token not in actionSymbols:
+        sys.exit("Error: string has a symbol not recognized by the grammar.")
 
 
 #---------------------------------------------------------------
@@ -569,40 +573,63 @@ for itemIndex in range(len(itemKernels)):
         
 print(getHtmlDoc(getTable(tableHeader, tableRows)))
 
+
+
 #---------------------------------------------------------------
 # Parse strings with SLR table
 #---------------------------------------------------------------
 
 # Parse input strings into lists of tokens
+rawStrings = []
 strings = []
 for i in range(numberOfStrings):
-    string = input().strip()
-    tokenList = string.split()
+    line = input().strip()
+    rawStrings.append(line)
+    tokenList = line.split()
     tokenList.append(EOF)
     strings.append(tokenList)
 
 # Parse each string with SLR table  
-'''stack = [0]
+actionSymbols = terminals.union(EOF)
+
 for i in range(numberOfStrings):
-    string = strings[i].reverse()
-    j = 0
+    stack = [0]
+    string = strings[i].copy()
+    string.reverse()
+    print(f"\nchecking string {rawStrings[i]}:")
     while True:
         itemIndex = top(stack)
         stringToken = top(string)
+        checkTokenInGrammar(stringToken)
+
         action = retrieveFromDict(itemActions[itemIndex], stringToken)
+        actionType = action[0]
+        actionParameter = action[1]
 
-        actionType = itemActions[itemIndex][stringToken][0]
-        actionParameter = itemActions[itemIndex][stringToken][1]
+        if actionType == SHIFT:
+            print(f"shift {actionParameter}")
+            stack.append(string.pop())
+            stack.append(actionParameter)
 
-        if action == SHIFT:
-            
-        elif action == REDUCE:
-            
-        elif action == ACCEPT:
-            print(f"{strings[i]} accepted")
+        elif actionType == REDUCE:
+            print(f"reduce {actionParameter}")
+            bodyLength = len(body(productions[actionParameter]))
+            tokensToRemove = 2 * bodyLength
+            for i in range(tokensToRemove):
+                top(stack)
+                stack.pop()
+            topIndex = top(stack)        
+            productionHeader = header(productions[actionParameter])
+            stack.append(productionHeader)
+
+            # Goto continuation
+            destinationIndex = retrieveFromDict(itemTransitions[topIndex], productionHeader)
+            stack.append(destinationIndex)
+            print(f"goto {destinationIndex}")
+
+        elif actionType == ACCEPT:
+            print(f"string {rawStrings[i]} accepted")
             break
-            '''
             
-
 # Qs
 # Do we need to validate overlap in table cell
