@@ -15,6 +15,7 @@ SHIFT = "S"
 REDUCE = "R"
 ACCEPT = "AC"
 UNIQUE_TOKEN = "A01705249"
+STYLESHEET = "styles.css"
 
 
 class Queue:
@@ -61,7 +62,7 @@ class ProductionWithDot:
     def completed(self):
         return (not self.dotIndex < len(self.production))
 
-    def production(self):
+    def getProduction(self):
         return self.production
 
     def __eq__(self, other):
@@ -222,6 +223,79 @@ def retrieveFromDict(aDict, key):
     else:
         sys.exit(f"Error: required action doesn't exist.")
 
+def getTableHeader(terminalsArray, nonTerminalsArray):
+    '''
+    Returns a string representing the header of the SLR table
+    with HTML format
+    Arguments:
+        terminalsArray: a list of terminals for the actions section
+        nonTerminals: a list of non-terminals for the goto section
+    Returns:
+        a string with HTML format
+    '''
+    headerTitles = f"\t<th> </th>\n"
+    headerTitles += f"\t<th colspan = {len(terminalsArray)}> ACTIONS </th>\n"
+    headerTitles += f"\t<th colspan = {len(nonTerminalsArray)}> GOTO </th>\n"
+    headerTitles = "<tr>\n" + headerTitles + "</tr>\n"
+
+    headerSymbols = f"\t<th> </th>\n"
+    for symbol in terminalsArray + nonTerminalsArray:
+        headerSymbols += f"\t<th> {symbol} </th>\n"
+    headerSymbols = "<tr>\n" + headerSymbols + "</tr>"
+
+    return (headerTitles + headerSymbols)
+
+def getTableRow(cellValues):
+    '''
+    Returns a string representing a row of the SLR table
+    with HTML format
+    Arguments:
+        cellValues: a list of values for each cell
+    Returns:
+        a string with HTML format
+    '''
+    rowCells = ""
+    for value in cellValues:
+        rowCells += f"\t<td> {value} </td>\n"
+    tableRow = "<tr>\n" + rowCells + "</tr>\n"
+    return tableRow
+
+def getTable(header, rows):
+    '''
+    Returns a string representing a full SLR table
+    with HTML format
+    Arguments:
+        header: an HTML string representing a table header
+        rows: a list of HTML string representing table rows
+    Returns:
+        a string with HTML format
+    '''
+    table = "<table>\n"
+    table += header
+    for row in rows:
+        table += row
+    table += "</table>\n"
+    return table
+
+def getHtmlDoc(table):
+    '''
+    Returns a string representing a full HTML document with a table
+    and link to a stylesheet
+    Arguments:
+        table: an HTML string representing a table
+    Returns:
+        a string with HTML format
+    '''
+    doc = "<!DOCTYPE html>\n"
+    doc += "<html>\n"
+    doc += "<head>\n"
+    doc += f"\t<link rel=\'stylesheet\' href=\'{STYLESHEET}\'>\n"
+    doc += "\t<title> SLR table </title>\n"
+    doc += "</head>\n"
+    doc += "<body>\n" + table + "</body>\n"
+    doc += "</html>\n"
+    return doc
+
 
 #---------------------------------------------------------------
 # Parse input into lists of tokens and lists of symbols
@@ -231,8 +305,9 @@ nonTerminals = set()
 terminals = set()
 startNonTerm = None
 
-numberOfProductions = int(input().strip())
-numberOfStrings = int(input().strip())
+inputNumbers = input().strip().split()
+numberOfProductions = int(inputNumbers[0])
+numberOfStrings = int(inputNumbers[1])
 
 for i in range(numberOfProductions):
     line = input().strip()
@@ -444,7 +519,7 @@ for itemIndex in range(len(itemKernels)):
 for itemIndex in range(len(itemKernels)):
     for productionWithDot in itemProductions[itemIndex]:
         if productionWithDot.completed():
-            production = productionWithDot.production()
+            production = productionWithDot.getProduction()
             productionIndex = productions.index(production)
             
             if productionIndex == 0:
@@ -454,6 +529,45 @@ for itemIndex in range(len(itemKernels)):
                     insertIntoDict(itemActions[itemIndex], follow, (REDUCE, productionIndex))
                
 
+#---------------------------------------------------------------
+# Build HTML table
+#---------------------------------------------------------------
+nonTerminalsArray = []
+for nonTerminal in nonTerminals:
+    nonTerminalsArray.append(nonTerminal)
+nonTerminalsArray.sort()
+
+terminalsArray = []
+for terminal in terminals:
+    terminalsArray.append(terminal)
+terminalsArray.sort()
+terminalsArray.append(EOF)
+
+tableHeader = getTableHeader(terminalsArray, nonTerminalsArray)
+tableRows = []
+
+for itemIndex in range(len(itemKernels)):
+    cellValues = [itemIndex]
+    for terminal in terminalsArray:
+        if terminal in itemActions[itemIndex].keys():
+            actionType = itemActions[itemIndex][terminal][0]
+            actionParameter = itemActions[itemIndex][terminal][1]
+            if actionType == ACCEPT:
+                actionParameter = ""
+            cellValues.append(f"{actionType}{actionParameter}")
+        else:
+            cellValues.append("")
+
+    for nonTerminal in nonTerminalsArray:
+        if nonTerminal in itemTransitions[itemIndex].keys():
+            destinationIndex = itemTransitions[itemIndex][nonTerminal]
+            cellValues.append(destinationIndex)
+        else:
+            cellValues.append("")
+
+    tableRows.append(getTableRow(cellValues))
+        
+print(getHtmlDoc(getTable(tableHeader, tableRows)))
 
 #---------------------------------------------------------------
 # Parse strings with SLR table

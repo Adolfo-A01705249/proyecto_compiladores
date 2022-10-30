@@ -1,0 +1,165 @@
+
+
+Item #0
+-------------------------------
+Kernel: 
+A01705249 -> . S
+-------------------------------
+Whole list: 
+A01705249 -> . S
+S -> . S S *
+S -> . S S +
+S -> . a
+-------------------------------
+Transitions: 
+Under a moves to 1
+Under S moves to 2
+
+
+Item #1
+-------------------------------
+Kernel: 
+S -> a . 
+-------------------------------
+Whole list: 
+S -> a . 
+-------------------------------
+Transitions: 
+
+
+Item #2
+-------------------------------
+Kernel: 
+S -> S . S *
+A01705249 -> S . 
+S -> S . S +
+-------------------------------
+Whole list: 
+S -> S . S *
+A01705249 -> S . 
+S -> S . S +
+S -> . S S *
+S -> . S S +
+S -> . a
+-------------------------------
+Transitions: 
+Under a moves to 1
+Under S moves to 3
+
+
+Item #3
+-------------------------------
+Kernel: 
+S -> S . S *
+S -> S S . *
+S -> S . S +
+S -> S S . +
+-------------------------------
+Whole list: 
+S -> S . S *
+S -> S S . *
+S -> S . S +
+S -> S S . +
+S -> . S S *
+S -> . S S +
+S -> . a
+-------------------------------
+Transitions: 
+Under a moves to 1
+Under + moves to 4
+Under S moves to 3
+Under * moves to 5
+
+
+Item #4
+-------------------------------
+Kernel: 
+S -> S S + . 
+-------------------------------
+Whole list: 
+S -> S S + . 
+-------------------------------
+Transitions: 
+
+
+Item #5
+-------------------------------
+Kernel: 
+S -> S S * . 
+-------------------------------
+Whole list: 
+S -> S S * . 
+-------------------------------
+Transitions: 
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel='stylesheet' href='styles.css'>
+	<title> SLR table </title>
+</head>
+<body>
+<table>
+<tr>
+	<th> </th>
+	<th colspan = 4> ACTIONS </th>
+	<th colspan = 1> GOTO </th>
+</tr>
+<tr>
+	<th> </th>
+	<th> * </th>
+	<th> + </th>
+	<th> a </th>
+	<th> $ </th>
+	<th> S </th>
+</tr><tr>
+	<td> 0 </td>
+	<td>  </td>
+	<td>  </td>
+	<td> S1 </td>
+	<td>  </td>
+	<td> 2 </td>
+</tr>
+<tr>
+	<td> 1 </td>
+	<td> R3 </td>
+	<td> R3 </td>
+	<td> R3 </td>
+	<td> R3 </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 2 </td>
+	<td>  </td>
+	<td>  </td>
+	<td> S1 </td>
+	<td> AC </td>
+	<td> 3 </td>
+</tr>
+<tr>
+	<td> 3 </td>
+	<td> S5 </td>
+	<td> S4 </td>
+	<td> S1 </td>
+	<td>  </td>
+	<td> 3 </td>
+</tr>
+<tr>
+	<td> 4 </td>
+	<td> R2 </td>
+	<td> R2 </td>
+	<td> R2 </td>
+	<td> R2 </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 5 </td>
+	<td> R1 </td>
+	<td> R1 </td>
+	<td> R1 </td>
+	<td> R1 </td>
+	<td>  </td>
+</tr>
+</table>
+</body>
+</html>
+
