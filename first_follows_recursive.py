@@ -35,16 +35,6 @@ def header(production):
     '''
     return production[0]
 
-def body(production):
-    '''
-    Returns the body portion of a grammar's production
-    Arguments:
-        production: a python list of tokens representing a production
-    Returns:
-        The production's body as a list of tokenss
-    '''
-    return production[2:]
-
 def firstsOfString(string):
     '''
     Return the set of firsts of a string

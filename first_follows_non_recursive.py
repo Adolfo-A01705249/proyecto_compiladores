@@ -1,4 +1,5 @@
 # Prints a list of a grammar's non-terminal's FIRSTS and FOLLOWS
+# Can NOT deal with recursive grammars
 
 # usage: $python parser.py < <input file>
 
