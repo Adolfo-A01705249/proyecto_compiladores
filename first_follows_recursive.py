@@ -97,6 +97,9 @@ def propagateFirstsSeeds(nonTerminal, seeds):
         nonTerminal: a non-terminal to propagate to
         seeds: a set of tokens to propagate
     '''
+    if visited[nonTerminal]:
+        return
+    visited[nonTerminal] = True
     firsts[nonTerminal].update(seeds)
     for node in reverseFirstsDependencies[nonTerminal]:
         propagateFirstsSeeds(node, seeds)
@@ -109,6 +112,9 @@ def propagateFollowsSeeds(nonTerminal, seeds):
         nonTerminal: a non-terminal to propagate to
         seeds: a set of tokens to propagate
     '''
+    if visited[nonTerminal]:
+        return
+    visited[nonTerminal] = True
     follows[nonTerminal].update(seeds)
     for node in reverseFollowsDependencies[nonTerminal]:
         propagateFollowsSeeds(node, seeds)
@@ -127,6 +133,8 @@ reverseFirstsDependencies = dict()
 follows = dict()
 followsSeeds = dict()
 reverseFollowsDependencies = dict()
+
+visited = dict()
 
 for i in range(numberOfProductions):
     line = input().strip()
@@ -152,6 +160,8 @@ for i in range(numberOfProductions):
     follows[nonTerminal] = set()
     followsSeeds[nonTerminal] = set()
     reverseFollowsDependencies[nonTerminal] = set()
+
+    visited[nonTerminal] = set()
 
 startNonTerm = header(productions[0])
 
@@ -182,6 +192,8 @@ for production in productions:
 # Propagate firsts seeds
 for nonTerminal in nonTerminals:
     if len(firstsSeeds[nonTerminal]) > 0:
+        for node in visited:
+            visited[node] = False
         propagateFirstsSeeds(nonTerminal, firstsSeeds[nonTerminal])
 
 
@@ -203,6 +215,8 @@ for production in productions:
 # Propagate follows seeds
 for nonTerminal in nonTerminals:
     if len(followsSeeds[nonTerminal]) > 0:
+        for node in visited:
+            visited[node] = False
         propagateFollowsSeeds(nonTerminal, followsSeeds[nonTerminal])
 
 
