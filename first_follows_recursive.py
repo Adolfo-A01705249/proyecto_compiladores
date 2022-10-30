@@ -142,7 +142,7 @@ for i in range(numberOfProductions):
     nonTerminal = header(production)
     nonTerminals.add(nonTerminal)
 
-    # Initialize set of empty set of first and follows for each non-terminal
+    # Initialize sets for firsts and follows for each non-terminal
     firsts[nonTerminal] = set()
     firstsSeeds[nonTerminal] = set()
     reverseFirstsDependencies[nonTerminal] = set()
@@ -187,7 +187,7 @@ for nonTerminal in nonTerminals:
         propagateFirstsSeeds(nonTerminal, firstsSeeds[nonTerminal])
 
 
-# Build follows dependency graph and find firsts seeds
+# Build follows dependency graph and find follows seeds
 followsSeeds[startNonTerm].add(EOF)
 for production in productions:
     for i in range(BODY_START_INDEX, len(production)):

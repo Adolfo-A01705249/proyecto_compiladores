@@ -3,20 +3,19 @@
 # usage: $python parser.py < <input file>
 
 # Author: Adolfo Acosta Castro [A01705249]
-# Date: 2022/10/05
+# Date: 2022/10/30
 
-from re import A
 import sys
 
-EPSILON = "\'e\'"
-EPSILON_FOR_PRINT = "\' \'"
-EOF = "$"
+EPSILON = '\' \''
+EOF ='$'
+BODY_START_INDEX = 2
 DOT = "."
 SHIFT = "S"
 REDUCE = "R"
 ACCEPT = "AC"
-
 UNIQUE_TOKEN = "A01705249"
+
 
 class Queue:
     values = []
@@ -101,7 +100,7 @@ def setToString(set, separator):
     """
     resultString = ""
     for item in set:
-        resultString += (EPSILON_FOR_PRINT if item == EPSILON else item) + separator
+        resultString += item + separator
     return resultString[:-len(separator)]
 
 def header(production):
@@ -135,25 +134,7 @@ def top(stack):
     if not len(stack) > 0:
         sys.exit("Error: no more tokens inside of stack.")
 
-    stack[-1]
-
-def firstsOfNonTerm(nonTerminal):
-    '''
-    Calculates and stores the set of firsts of a non terminal
-    Arguments:
-        nonTerminal: a grammar's non terminal symbol as a string
-    Returns:
-        The set of firsts for the non terminal
-    '''
-    # Return stored set of firsts if its been calculated already
-    if len(firsts[nonTerminal]) != 0:
-        return firsts[nonTerminal]
-
-    for production in productions:
-        if header(production) == nonTerminal:
-            firsts[nonTerminal].update(firstsOfString(body(production)))
-
-    return firsts[nonTerminal]
+    return stack[-1]
 
 def firstsOfString(string):
     '''
@@ -166,7 +147,7 @@ def firstsOfString(string):
     stringFirsts = set()
     for i in range(len(string)):
         if string[i] in nonTerminals:
-            nonTermFirsts = firstsOfNonTerm(string[i])
+            nonTermFirsts = firsts[string[i]]
             stringFirsts.update(nonTermFirsts)
             stringFirsts.discard(EPSILON)
             if not EPSILON in nonTermFirsts:
@@ -177,43 +158,63 @@ def firstsOfString(string):
     stringFirsts.add(EPSILON)
     return stringFirsts
 
-def followsOfNonTerm(nonTerminal):
+def markEpsilons(nonTerminal):
     '''
-    Calculates and stores the sets of follows for a non terminal
+    Replaces all ocurrences of a non-terminal with epsilon in the 
+    bodies of productions for marking, and repeats recursively 
+    when a production that has only epsilon in its body is found
     Arguments:
-        nonTerminal: a grammar's non terminal symbol as a string
-    Returns:
-        The set of follows for the non terminal
+        nonTerminal: the non-terminal to replace
     '''
-    # Return stored set of follows if its been calculated already
-    if len(follows[nonTerminal]) != 0 and follows[nonTerminal] != {EOF}:
-        return follows[nonTerminal]
+    for production in productionsForMarking:
+        bodyIsAllEpsilon = True
+        for i in range(BODY_START_INDEX, len(production)):
+            if production[i] == nonTerminal:
+                production[i] = EPSILON
 
-    for production in productions:
-        prodBody = body(production)
-        addHeaderFollowsFlag = False
-        for i in range(len(prodBody)):
-            if prodBody[i] == nonTerminal:
-                if i < len(prodBody) - 1:
-                    betaFirsts = firstsOfString(prodBody[i + 1:])
-                    follows[nonTerminal].update(betaFirsts)
-                    follows[nonTerminal].discard(EPSILON)
-                    if EPSILON in betaFirsts:
-                        addHeaderFollowsFlag = True
-                else:
-                    addHeaderFollowsFlag = True
+            if production[i] != EPSILON:
+                bodyIsAllEpsilon = False
         
-        if addHeaderFollowsFlag and header(production) != nonTerminal:
-            headerFollows = followsOfNonTerm(header(production))
-            follows[nonTerminal].update(headerFollows)
+        producingNonTerm = header(production)
+        if bodyIsAllEpsilon and EPSILON not in firsts[producingNonTerm]:
+            firsts[producingNonTerm].add(EPSILON)
+            markEpsilons(producingNonTerm)
 
-    return follows[nonTerminal]
+def propagateFirstsSeeds(nonTerminal, seeds):
+    '''
+    Uses the firsts dependency graph to propagate firsts
+    between non-terminals
+    Arguments:
+        nonTerminal: a non-terminal to propagate to
+        seeds: a set of tokens to propagate
+    '''
+    if visited[nonTerminal]:
+        return
+    visited[nonTerminal] = True
+    firsts[nonTerminal].update(seeds)
+    for node in reverseFirstsDependencies[nonTerminal]:
+        propagateFirstsSeeds(node, seeds)
+
+def propagateFollowsSeeds(nonTerminal, seeds):
+    '''
+    Uses the follows dependency graph to propagate follows
+    between non-terminals
+    Arguments:
+        nonTerminal: a non-terminal to propagate to
+        seeds: a set of tokens to propagate
+    '''
+    if visited[nonTerminal]:
+        return
+    visited[nonTerminal] = True
+    follows[nonTerminal].update(seeds)
+    for node in reverseFollowsDependencies[nonTerminal]:
+        propagateFollowsSeeds(node, seeds)
 
 def insertIntoDict(aDict, key, value):
     if not key in aDict.keys():
         aDict[key] = value
     else:
-        sys.exit(f"Error: overlap in table cell")
+        sys.exit(f"Error: overlap in SLR table cell.")
 
 def retrieveFromDict(aDict, key):
     if key in aDict.keys():
@@ -221,63 +222,130 @@ def retrieveFromDict(aDict, key):
     else:
         sys.exit(f"Error: required action doesn't exist.")
 
-# Parse input productions into lists of tokens
+
+#---------------------------------------------------------------
+# Parse input into lists of tokens and lists of symbols
+#---------------------------------------------------------------
 productions = []
-parameters = input().strip().split()
-numberOfProductions = int(parameters[0])
-numberOfStrings = int(parameters[1])
+nonTerminals = set()
+terminals = set()
+startNonTerm = None
+
+numberOfProductions = int(input().strip())
+numberOfStrings = int(input().strip())
 
 for i in range(numberOfProductions):
     line = input().strip()
 
-    # Change epsilon representation
-    lineButCooler = ""
-    j = 0
-    while j < len(line):
-        if line[j] == '\'':
-            lineButCooler += EPSILON
-            j = j + 3
-        else:
-            lineButCooler += line[j]
-            j = j + 1
-
     # Store each production as a list of tokens
-    production = lineButCooler.split()
+    production = line.split()
+    if production[2] == '\'' and production[3] == '\'':
+        production.pop()
+        production.pop()
+        production.append(EPSILON)
     productions.append(production)
 
-
-# Get sets of terminals and non-terminals
-terminals = set()
-nonTerminals = set()
-
-for production in productions:
+    # Store all non-terminals
     nonTerminal = header(production)
     nonTerminals.add(nonTerminal)
 
+startNonTerm = header(productions[0])
+
+# Get set of terminals and symbols
 for production in productions:
     for token in body(production):
-        if token not in nonTerminals:
+        if token not in nonTerminals and token != EPSILON:
             terminals.add(token)
-
 symbols = terminals.union(nonTerminals)
 
 
-# Get firsts and follows of each non-terminal
-'''firsts = dict()
-follows = dict()
 
+#---------------------------------------------------------------
+# Calculate first and follows sets
+#---------------------------------------------------------------
+productionsForMarking = []
+firsts = dict()
+firstsSeeds = dict()
+reverseFirstsDependencies = dict()
+
+follows = dict()
+followsSeeds = dict()
+reverseFollowsDependencies = dict()
+
+visited = dict()
+
+# Initialize sets used for firsts and follows for each non-terminal
 for nonTerminal in nonTerminals:
     firsts[nonTerminal] = set()
+    firstsSeeds[nonTerminal] = set()
+    reverseFirstsDependencies[nonTerminal] = set()
+
     follows[nonTerminal] = set()
+    followsSeeds[nonTerminal] = set()
+    reverseFollowsDependencies[nonTerminal] = set()
 
+    visited[nonTerminal] = set()
+
+# Find which non-terminals have epsilon in their firsts
+for production in productions:
+    productionsForMarking.append(production.copy())
+
+for production in productionsForMarking:
+    nonTerminal = header(production)
+    if production[BODY_START_INDEX] == EPSILON and EPSILON not in firsts[nonTerminal]:
+        firsts[nonTerminal].add(EPSILON)
+        markEpsilons(nonTerminal)
+
+# Build firsts dependency graph and find firsts seeds
+for production in productions:
+    if production[BODY_START_INDEX] == EPSILON:
+        continue
+
+    nonTerminal = header(production)
+    for i in range(BODY_START_INDEX, len(production)):
+        token = production[i]
+        if token in nonTerminals:
+            reverseFirstsDependencies[token].add(nonTerminal)
+            if EPSILON not in firsts[token]:
+                break
+        else:
+            firstsSeeds[nonTerminal].add(token)
+            break
+
+# Propagate firsts seeds
 for nonTerminal in nonTerminals:
-    firstsOfNonTerm(nonTerminal)'''
+    if len(firstsSeeds[nonTerminal]) > 0:
+        for node in visited:
+            visited[node] = False
+        propagateFirstsSeeds(nonTerminal, firstsSeeds[nonTerminal])
 
-startNonTerm = header(productions[0])
-'''follows[startNonTerm].add(EOF)
+# Build follows dependency graph and find follows seeds
+followsSeeds[startNonTerm].add(EOF)
+for production in productions:
+    for i in range(BODY_START_INDEX, len(production)):
+        token = production[i]
+        if token in nonTerminals:
+            if i < len(production) - 1:
+                betaFirsts = firstsOfString(production[i + 1:])
+                followsSeeds[token].update(betaFirsts)
+                followsSeeds[token].discard(EPSILON)
+                if EPSILON in betaFirsts:
+                    reverseFollowsDependencies[header(production)].add(token)
+            else:
+                reverseFollowsDependencies[header(production)].add(token)
+
+# Propagate follows seeds
 for nonTerminal in nonTerminals:
-    followsOfNonTerm(nonTerminal)'''
+    if len(followsSeeds[nonTerminal]) > 0:
+        for node in visited:
+            visited[node] = False
+        propagateFollowsSeeds(nonTerminal, followsSeeds[nonTerminal])
 
+
+
+#---------------------------------------------------------------
+# Generate item tree and SLR table
+#---------------------------------------------------------------
 
 # Make dictionary of productions organized by non-terminal 
 productionsOf = dict()
@@ -287,7 +355,6 @@ for nonTerminal in nonTerminals:
 for production in productions:
     nonTerminal = header(production)
     productionsOf[nonTerminal].append(production)
-    
 
 # Create new production that recognizes the grammar
 artificialProduction = [UNIQUE_TOKEN, "->", startNonTerm]
@@ -305,7 +372,7 @@ itemKernels.append(initialKernel)
 newItemIndex = len(itemKernels) - 1
 itemQueue.insert(newItemIndex)
 
-# Build item tree, breath first traversal just cause
+# Build item tree, breath first traversal
 while not itemQueue.empty():
     itemIndex = itemQueue.remove()
 
@@ -350,22 +417,21 @@ while not itemQueue.empty():
 
         destinationIndex = -1
         if not derivedKernel in itemKernels:
-            # Create brand new item and store connection to it
+            # Create brand new item
             itemKernels.append(derivedKernel)
             newItemIndex = len(itemKernels) - 1
             itemQueue.insert(newItemIndex)
             destinationIndex = newItemIndex
-            
         else:
             oldItemIndex = itemKernels.index(derivedKernel)
             destinationIndex = oldItemIndex
 
+        # Store transitions between items
         itemTransitions[itemIndex][symbol] = destinationIndex
         print(f"Under {symbol} moves to {destinationIndex}")
-
-            
+      
 # Store shift actions
-'''itemActions = []
+itemActions = []
 for itemIndex in range(len(itemKernels)):
     itemActions.append(dict())
     for symbol in itemTransitions[itemIndex].keys():
@@ -376,18 +442,22 @@ for itemIndex in range(len(itemKernels)):
 
 # Store reduce and accepted actions
 for itemIndex in range(len(itemKernels)):
-    for productionWithDot in itemKernels[itemIndex]:
+    for productionWithDot in itemProductions[itemIndex]:
         if productionWithDot.completed():
             production = productionWithDot.production()
             productionIndex = productions.index(production)
             
             if productionIndex == 0:
                 insertIntoDict(itemActions[itemIndex], EOF, (ACCEPT, None))
-
             else:
                 for follow in follows[header(production)]:
                     insertIntoDict(itemActions[itemIndex], follow, (REDUCE, productionIndex))
-                
+               
+
+
+#---------------------------------------------------------------
+# Parse strings with SLR table
+#---------------------------------------------------------------
 
 # Parse input strings into lists of tokens
 strings = []
@@ -395,9 +465,9 @@ for i in range(numberOfStrings):
     string = input().strip()
     tokenList = string.split()
     tokenList.append(EOF)
-    strings.append(tokenList)'''
+    strings.append(tokenList)
 
-# Parse strings with table
+# Parse each string with SLR table  
 '''stack = [0]
 for i in range(numberOfStrings):
     string = strings[i].reverse()
@@ -421,5 +491,4 @@ for i in range(numberOfStrings):
             
 
 # Qs
-# Do we need to account for recursive grammar's (affects first & follows)
 # Do we need to validate overlap in table cell
