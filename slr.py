@@ -259,7 +259,7 @@ def checkTokenInGrammar(token):
         parsingErrorData[ERROR] = True
         parsingErrorData[MESSAGE] = f"Error: input string has a symbol ({token}) that is not recognized by the grammar."
 
-def getTableHeader(terminalsArray, nonTerminalsArray):
+def getSlrTableHeader(terminalsArray, nonTerminalsArray):
     '''
     Returns a string representing the header of the SLR table
     with HTML format
@@ -280,6 +280,21 @@ def getTableHeader(terminalsArray, nonTerminalsArray):
     headerSymbols = "<tr>\n" + headerSymbols + "</tr>"
 
     return (headerTitles + headerSymbols)
+
+def getTableHeader(headers):
+    '''
+    Returns a string representing the header of a simple table
+    with HTML format
+    Arguments:
+        headers: a list of strings for the header of each column
+    Returns:
+        a string with HTML format
+    '''
+    headerCells = ""
+    for title in headers:
+        headerCells += f"\t<th> {title} </th>\n"
+    tableHeader = "<tr>\n" + headerCells + "</tr>\n"
+    return tableHeader
 
 def getTableRow(cellValues):
     '''
@@ -313,12 +328,12 @@ def getTable(header, rows):
     table += "</table>\n"
     return table
 
-def getHtmlDoc(table):
+def getHtmlDoc(bodyElements):
     '''
-    Returns a string representing a full HTML document with a table
+    Returns a string representing a full HTML document with content
     and link to a stylesheet
     Arguments:
-        table: an HTML string representing a table
+        bodyElements: a list of HTML strings representing HTML elements
     Returns:
         a string with HTML format
     '''
@@ -328,7 +343,10 @@ def getHtmlDoc(table):
     doc += f"\t<link rel=\'stylesheet\' href=\'{STYLESHEET}\'>\n"
     doc += "\t<title> SLR table </title>\n"
     doc += "</head>\n"
-    doc += "<body>\n" + table + "</body>\n"
+    doc += "<body>\n"
+    for element in bodyElements:
+        doc += f"{element}\n"
+    doc += "</body>\n"
     doc += "</html>\n"
     return doc
 
@@ -566,7 +584,7 @@ for itemIndex in range(len(itemKernels)):
                
 
 #---------------------------------------------------------------
-# Build HTML table
+# Build HTML SLR table
 #---------------------------------------------------------------
 nonTerminalsArray = []
 for nonTerminal in nonTerminals:
@@ -579,8 +597,7 @@ for terminal in terminals:
 terminalsArray.sort()
 terminalsArray.append(EOF)
 
-tableHeader = getTableHeader(terminalsArray, nonTerminalsArray)
-tableRows = []
+slrTableRows = []
 
 for itemIndex in range(len(itemKernels)):
     cellValues = [itemIndex]
@@ -601,9 +618,10 @@ for itemIndex in range(len(itemKernels)):
         else:
             cellValues.append("")
 
-    tableRows.append(getTableRow(cellValues))
+    slrTableRows.append(getTableRow(cellValues))
         
-print(getHtmlDoc(getTable(tableHeader, tableRows)))
+slrTableHeader = getSlrTableHeader(terminalsArray, nonTerminalsArray)
+slrTable = getTable(slrTableHeader, slrTableRows)
 
 
 
@@ -624,13 +642,16 @@ for i in range(numberOfStrings):
 # Parse each string with SLR table  
 actionSymbols = terminals.union(EOF)
 parsingErrorData = [None, None]
+acceptTableRows = []
 
 for i in range(numberOfStrings):
     stack = [0]
-    parsingErrorData = [False, ""]
-    parsingResultMessage = None
     string = strings[i].copy()
     string.reverse()
+
+    parsingErrorData = [False, ""]
+    parsingResultMessage = None
+    
     print(f"\nchecking string {rawStrings[i]}:")
     while True:
         itemIndex = top(stack, "stack")
@@ -675,7 +696,14 @@ for i in range(numberOfStrings):
     if parsingErrorData[ERROR]:
         parsingResultMessage = f"Unaccepted. {parsingErrorData[MESSAGE]}"
 
-    print(f"String {rawStrings[i]}: {parsingResultMessage}")
+    tableRow = getTableRow([rawStrings[i], parsingResultMessage])
+    acceptTableRows.append(tableRow)
+
+acceptTableHeader = getTableHeader(["Input string", "Parse result"])
+acceptTable = getTable(acceptTableHeader, acceptTableRows)
+
+htmlDoc = getHtmlDoc([slrTable, acceptTable])
+print(htmlDoc)
 
 # Qs
 # Do we need to validate overlap in table cell

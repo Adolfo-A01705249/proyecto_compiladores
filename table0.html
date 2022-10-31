@@ -14,15 +14,59 @@ two -> . a
 two -> . b
 -------------------------------
 Transitions: 
-Under ( moves to 1
-Under b moves to 2
-Under two moves to 3
-Under A moves to 4
-Under goal moves to 5
-Under a moves to 6
+Under two moves to 1
+Under A moves to 2
+Under a moves to 3
+Under goal moves to 4
+Under ( moves to 5
+Under b moves to 6
 
 
 Item #1
+-------------------------------
+Kernel: 
+A -> two . 
+-------------------------------
+Whole list: 
+A -> two . 
+-------------------------------
+Transitions: 
+
+
+Item #2
+-------------------------------
+Kernel: 
+goal -> A . 
+-------------------------------
+Whole list: 
+goal -> A . 
+-------------------------------
+Transitions: 
+
+
+Item #3
+-------------------------------
+Kernel: 
+two -> a . 
+-------------------------------
+Whole list: 
+two -> a . 
+-------------------------------
+Transitions: 
+
+
+Item #4
+-------------------------------
+Kernel: 
+A01705249 -> goal . 
+-------------------------------
+Whole list: 
+A01705249 -> goal . 
+-------------------------------
+Transitions: 
+
+
+Item #5
 -------------------------------
 Kernel: 
 A -> ( . A )
@@ -35,64 +79,20 @@ two -> . a
 two -> . b
 -------------------------------
 Transitions: 
-Under ( moves to 1
-Under b moves to 2
-Under two moves to 3
+Under two moves to 1
 Under A moves to 7
-Under a moves to 6
-
-
-Item #2
--------------------------------
-Kernel: 
-two -> b . 
--------------------------------
-Whole list: 
-two -> b . 
--------------------------------
-Transitions: 
-
-
-Item #3
--------------------------------
-Kernel: 
-A -> two . 
--------------------------------
-Whole list: 
-A -> two . 
--------------------------------
-Transitions: 
-
-
-Item #4
--------------------------------
-Kernel: 
-goal -> A . 
--------------------------------
-Whole list: 
-goal -> A . 
--------------------------------
-Transitions: 
-
-
-Item #5
--------------------------------
-Kernel: 
-A01705249 -> goal . 
--------------------------------
-Whole list: 
-A01705249 -> goal . 
--------------------------------
-Transitions: 
+Under a moves to 3
+Under ( moves to 5
+Under b moves to 6
 
 
 Item #6
 -------------------------------
 Kernel: 
-two -> a . 
+two -> b . 
 -------------------------------
 Whole list: 
-two -> a . 
+two -> b . 
 -------------------------------
 Transitions: 
 
@@ -118,6 +118,71 @@ Whole list:
 A -> ( A ) . 
 -------------------------------
 Transitions: 
+
+checking string ( ( a ) ):
+shift 5
+shift 5
+shift 3
+reduce 4
+goto 1
+reduce 3
+goto 7
+shift 8
+reduce 2
+goto 7
+shift 8
+reduce 2
+goto 2
+reduce 1
+goto 4
+
+checking string ( ( ( ( ( b ) ) ) ) ):
+shift 5
+shift 5
+shift 5
+shift 5
+shift 5
+shift 6
+reduce 5
+goto 1
+reduce 3
+goto 7
+shift 8
+reduce 2
+goto 7
+shift 8
+reduce 2
+goto 7
+shift 8
+reduce 2
+goto 7
+shift 8
+reduce 2
+goto 7
+shift 8
+reduce 2
+goto 2
+reduce 1
+goto 4
+
+checking string ( a ) ):
+shift 5
+shift 3
+reduce 4
+goto 1
+reduce 3
+goto 7
+shift 8
+reduce 2
+goto 2
+
+checking string ( ( ( ( ( a b ) ) ) ) ):
+shift 5
+shift 5
+shift 5
+shift 5
+shift 5
+shift 3
 <!DOCTYPE html>
 <html>
 <head>
@@ -143,50 +208,28 @@ Transitions:
 	<th> two </th>
 </tr><tr>
 	<td> 0 </td>
-	<td> S1 </td>
+	<td> S5 </td>
 	<td>  </td>
+	<td> S3 </td>
 	<td> S6 </td>
-	<td> S2 </td>
 	<td>  </td>
+	<td> 2 </td>
 	<td> 4 </td>
-	<td> 5 </td>
-	<td> 3 </td>
+	<td> 1 </td>
 </tr>
 <tr>
 	<td> 1 </td>
-	<td> S1 </td>
 	<td>  </td>
-	<td> S6 </td>
-	<td> S2 </td>
+	<td> R3 </td>
 	<td>  </td>
-	<td> 7 </td>
 	<td>  </td>
-	<td> 3 </td>
+	<td> R3 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
 </tr>
 <tr>
 	<td> 2 </td>
-	<td>  </td>
-	<td> R5 </td>
-	<td>  </td>
-	<td>  </td>
-	<td> R5 </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-</tr>
-<tr>
-	<td> 3 </td>
-	<td>  </td>
-	<td> R3 </td>
-	<td>  </td>
-	<td>  </td>
-	<td> R3 </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-</tr>
-<tr>
-	<td> 4 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -197,7 +240,18 @@ Transitions:
 	<td>  </td>
 </tr>
 <tr>
-	<td> 5 </td>
+	<td> 3 </td>
+	<td>  </td>
+	<td> R4 </td>
+	<td>  </td>
+	<td>  </td>
+	<td> R4 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 4 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -208,12 +262,23 @@ Transitions:
 	<td>  </td>
 </tr>
 <tr>
+	<td> 5 </td>
+	<td> S5 </td>
+	<td>  </td>
+	<td> S3 </td>
+	<td> S6 </td>
+	<td>  </td>
+	<td> 7 </td>
+	<td>  </td>
+	<td> 1 </td>
+</tr>
+<tr>
 	<td> 6 </td>
 	<td>  </td>
-	<td> R4 </td>
+	<td> R5 </td>
 	<td>  </td>
 	<td>  </td>
-	<td> R4 </td>
+	<td> R5 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -241,75 +306,30 @@ Transitions:
 	<td>  </td>
 </tr>
 </table>
+
+<table>
+<tr>
+	<th> Input string </th>
+	<th> Parse result </th>
+</tr>
+<tr>
+	<td> ( ( a ) ) </td>
+	<td> Accepted. </td>
+</tr>
+<tr>
+	<td> ( ( ( ( ( b ) ) ) ) ) </td>
+	<td> Accepted. </td>
+</tr>
+<tr>
+	<td> ( a ) ) </td>
+	<td> Unaccepted. Error: a required table value doesn't exist. </td>
+</tr>
+<tr>
+	<td> ( ( ( ( ( a b ) ) ) ) ) </td>
+	<td> Unaccepted. Error: a required table value doesn't exist. </td>
+</tr>
+</table>
+
 </body>
 </html>
 
-
-checking string ( ( a ) ):
-shift 1
-shift 1
-shift 6
-reduce 4
-goto 3
-reduce 3
-goto 7
-shift 8
-reduce 2
-goto 7
-shift 8
-reduce 2
-goto 4
-reduce 1
-goto 5
-String ( ( a ) ): Accepted.
-
-checking string ( ( ( ( ( b ) ) ) ) ):
-shift 1
-shift 1
-shift 1
-shift 1
-shift 1
-shift 2
-reduce 5
-goto 3
-reduce 3
-goto 7
-shift 8
-reduce 2
-goto 7
-shift 8
-reduce 2
-goto 7
-shift 8
-reduce 2
-goto 7
-shift 8
-reduce 2
-goto 7
-shift 8
-reduce 2
-goto 4
-reduce 1
-goto 5
-String ( ( ( ( ( b ) ) ) ) ): Accepted.
-
-checking string ( a ) ):
-shift 1
-shift 6
-reduce 4
-goto 3
-reduce 3
-goto 7
-shift 8
-reduce 2
-goto 4
-String ( a ) ): Unaccepted. Error: a required table value doesn't exist.
-
-checking string ( ( ( ( ( a b ) ) ) ) ):
-shift 1
-shift 1
-shift 1
-shift 1
-shift 1
-shift 6
-String ( ( ( ( ( a b ) ) ) ) ): Unaccepted. Error: a required table value doesn't exist.
