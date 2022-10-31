@@ -23,7 +23,7 @@ MESSAGE = 1
 class Queue:
     """
     A simple FIFO queue data structure built
-    space-inefficiently on top of a list
+    space-inefficiently on top of a list.
     """
     values = []
     frontIndex = 0
@@ -42,7 +42,7 @@ class Queue:
 class ProductionWithDot:
     '''
     A grammar production with a marker (dot) that
-    can be moved between the body's symbols
+    can be moved between the body's symbols.
     '''
     production = None
     dotIndex = None # Index of symbol that is right after the dot
@@ -54,7 +54,7 @@ class ProductionWithDot:
     def underlined(self):
         '''
         Returns the symbol after the dot or None 
-        if dot is at the end of the production
+        if dot is at the end of the production.
         '''
         if not self.completed():
             return self.production[self.dotIndex]
@@ -64,7 +64,7 @@ class ProductionWithDot:
     def advanceDot(self):
         '''
         Returns a copy of the object with the 
-        dot one positiono ahead
+        dot one positiono ahead.
         '''
         advancedProduction = ProductionWithDot(self.production, self.dotIndex + 1)
         return advancedProduction
@@ -72,7 +72,7 @@ class ProductionWithDot:
     def completed(self):
         '''
         Returns true if the dot has advanced to 
-        the end of the production's body
+        the end of the production's body.
         '''
         if self.production[BODY_START_INDEX] == EPSILON:
             return True
@@ -80,7 +80,7 @@ class ProductionWithDot:
 
     def getProduction(self):
         '''
-        Returns the objects production
+        Returns the object's production.
         '''
         return self.production
 
@@ -110,9 +110,9 @@ class ProductionWithDot:
 
 def header(production):
     '''
-    Returns the header portion of a grammar's production
+    Returns the header portion of a grammar's production.
     Arguments:
-        production: a python list of tokens representing a production
+        production: a python list of tokens representing a well-formed production
     Returns:
         The production's header as a string
     '''
@@ -120,11 +120,11 @@ def header(production):
 
 def body(production):
     '''
-    Returns the body portion of a grammar's production
+    Returns the body portion of a grammar's production.
     Arguments:
-        production: a python list of tokens representing a production
+        production: a python list of tokens representing a well-formed production
     Returns:
-        The production's body as a list of tokenss
+        The production's body as a list of tokens
     '''
     return production[2:]
 
@@ -146,20 +146,22 @@ def top(stack, name):
     Returns the top-most value of a stack. If the stack is empty,
     it sets the parsing error data values.
     Arguments:
-        stack: a python list
+        stack: a python list, last element must be the top
         name: a string representing a descriptive name for the stack
     Returns:
-        The element on the last position of the list
+        The element on the last position of the list if it exists
+        None otherwise
     '''
     if not len(stack) > 0:
         parsingErrorData[ERROR] = True
-        parsingErrorData[MESSAGE] = "Error: tried to remove a token from the {name} but it was empty."
+        parsingErrorData[MESSAGE] = f"Error: tried to remove a token from the {name} but it was empty."
+        return None
 
     return stack[-1]
 
 def firstsOfString(string):
     '''
-    Return the set of firsts of a string
+    Return the set of firsts of a string.
     Arguments:
         string: a python list of grammar symbols
     Returns:
@@ -183,7 +185,7 @@ def markEpsilons(nonTerminal):
     '''
     Replaces all ocurrences of a non-terminal with epsilon in the 
     bodies of productions for marking, and repeats recursively 
-    when a production that has only epsilon in its body is found
+    when a production that has only epsilon in its body is found.
     Arguments:
         nonTerminal: the non-terminal to replace
     '''
@@ -204,7 +206,7 @@ def markEpsilons(nonTerminal):
 def propagateFirstsSeeds(nonTerminal, seeds):
     '''
     Uses the firsts dependency graph to propagate firsts
-    between non-terminals
+    between non-terminals.
     Arguments:
         nonTerminal: a non-terminal to propagate to
         seeds: a set of tokens to propagate
@@ -219,7 +221,7 @@ def propagateFirstsSeeds(nonTerminal, seeds):
 def propagateFollowsSeeds(nonTerminal, seeds):
     '''
     Uses the follows dependency graph to propagate follows
-    between non-terminals
+    between non-terminals.
     Arguments:
         nonTerminal: a non-terminal to propagate to
         seeds: a set of tokens to propagate
@@ -232,35 +234,69 @@ def propagateFollowsSeeds(nonTerminal, seeds):
         propagateFollowsSeeds(node, seeds)
 
 def insertIntoDict(dictArray, index, key, value):
+    '''
+    Inserts a value in the specified position of an array of
+    dictionaries. If the position is already occupied then
+    it end the program with an error.
+    Arguments:
+        dictArray: a list of dictionaries
+        index: the index of the dictionary
+        key: the key for the dictionary
+        value: the value to try and insert
+    '''
     if not key in dictArray[index].keys():
         dictArray[index][key] = value
     else:
         sys.exit(f"Error: overlap in SLR table cell ({index}, \"{key}\").")
 
 def retrieveFromDict(dictArray, index, key):
+    '''
+    Retrieves a value from the specified position of an array of
+    dictionaries. If the position doesn't contain any values then
+    it sets the parsing error data values.
+    Arguments:
+        dictArray: a list of dictionaries
+        index: the index of the dictionary
+        key: the key for the dictionary
+    Returns:
+        The value from the array if dictionaries if available,
+        None otherwise
+    '''
     if key in dictArray[index].keys():
         return dictArray[index][key]
     else:
         parsingErrorData[ERROR] = True
         parsingErrorData[MESSAGE] = f"Error: a required table value ({index}, \"{key}\"), doesn't exist."
+        return None
 
 def checkTokenInGrammar(token):
     '''
     Validates that a token from an input string
     is a terminal or the end of file token.
-    In case of an error, uses global variables to indicate an
-    error and a descriptive message.
+    In case of an error, it sets the parsing error data values.
     Arguments:
         token: the token to validate
     '''
     if token not in actionSymbols:
         parsingErrorData[ERROR] = True
-        parsingErrorData[MESSAGE] = f"Error: input string has a symbol ({token}) that is not recognized by the grammar."
+        parsingErrorData[MESSAGE] = f"Error: input string has a symbol (\"{token}\") that is not recognized by the grammar."
+
+def getStackStringState(stack, string):
+    '''
+    Returns a list with two elements: the contents of the stack and
+    the contents of an input string used in a parsing process, as strings.
+    Arguments:
+        stack: a list used as a stack when parsing a string
+        string: a list managed as a stack
+    Returns:
+        a list as described above
+    '''
+    return [" ".join(map(str, stack)), " ".join(map(str, reversed(string)))]
 
 def getSlrTableHeader(terminalsArray, nonTerminalsArray):
     '''
     Returns a string representing the header of the SLR table
-    with HTML format
+    with HTML format.
     Arguments:
         terminalsArray: a list of terminals for the actions section
         nonTerminals: a list of non-terminals for the goto section
@@ -282,7 +318,7 @@ def getSlrTableHeader(terminalsArray, nonTerminalsArray):
 def getTableHeader(headers):
     '''
     Returns a string representing the header of a simple table
-    with HTML format
+    with HTML format.
     Arguments:
         headers: a list of strings for the header of each column
     Returns:
@@ -297,7 +333,7 @@ def getTableHeader(headers):
 def getTreeTableRow(itemIndex, cellLists):
     '''
     Returns a string representing a row of the SLR item tree table
-    with HTML format
+    with HTML format.
     Arguments:
         itemIndex: an integer, the id of a tree item
         cellLists: a lists of lists, one list to be included per cell
@@ -318,7 +354,7 @@ def getTreeTableRow(itemIndex, cellLists):
 def getTableRow(cellValues):
     '''
     Returns a string representing a row of the SLR table
-    with HTML format
+    with HTML format.
     Arguments:
         cellValues: a list of values for each cell
     Returns:
@@ -333,7 +369,7 @@ def getTableRow(cellValues):
 def getTable(header, rows):
     '''
     Returns a string representing a full SLR table
-    with HTML format
+    with HTML format.
     Arguments:
         header: an HTML string representing a table header
         rows: a list of HTML string representing table rows
@@ -350,7 +386,7 @@ def getTable(header, rows):
 def getHtmlDoc(headings, bodyElements):
     '''
     Returns a string representing a full HTML document with content
-    and link to a stylesheet
+    and link to a stylesheet.
     Arguments:
         headings: a list of strings to use as h1 content for each body element
         bodyElements: a list of HTML strings representing HTML elements
@@ -370,6 +406,7 @@ def getHtmlDoc(headings, bodyElements):
     doc += "</body>\n"
     doc += "</html>\n"
     return doc
+
 
 
 #---------------------------------------------------------------
@@ -411,7 +448,7 @@ symbols = terminals.union(nonTerminals)
 
 
 #---------------------------------------------------------------
-# Calculate first and follows sets
+# Calculate firsts and follows sets
 #---------------------------------------------------------------
 productionsForMarking = []
 firsts = dict()
@@ -682,7 +719,7 @@ for i in range(numberOfStrings):
     parseTableRows = []
     
     while True:
-        parseCellValues = [" ".join(map(str, stack)), " ".join(map(str, reversed(string)))]
+        parseCellValues = getStackStringState(stack, string)
 
         itemIndex = top(stack, "stack")
         if parsingErrorData[ERROR]: break
@@ -717,7 +754,7 @@ for i in range(numberOfStrings):
             stack.append(productionHeader)
             
             # Goto continuation
-            parseCellValues = [" ".join(map(str, stack)), " ".join(map(str, reversed(string)))]
+            parseCellValues = getStackStringState(stack, string)
             parseCellValues.append(f"Goto {destinationIndex}")
 
             destinationIndex = retrieveFromDict(itemTransitions, topIndex, productionHeader)
@@ -737,7 +774,7 @@ for i in range(numberOfStrings):
     if parsingErrorData[ERROR]:
         parsingResultMessage = f"Unaccepted. {parsingErrorData[MESSAGE]}"
 
-        parseCellValues = [" ".join(map(str, stack)), " ".join(map(str, reversed(string)))]
+        parseCellValues = getStackStringState(stack, string)
         parseCellValues.append(parsingErrorData[MESSAGE])
         parseTableRows.append(getTableRow(parseCellValues))
 
@@ -757,7 +794,3 @@ for i in range(len(parseTables)):
 
 htmlDoc = getHtmlDoc(tableHeadings, [slrTable, acceptTable, treeTable] + parseTables)
 print(htmlDoc)
-
-# Qs
-# Do we need to validate overlap in table cell, how to handle when this happens
-# How to process epsilon prods in SLR tree generation
