@@ -346,11 +346,12 @@ def getTable(header, rows):
     table += "</table>\n"
     return table
 
-def getHtmlDoc(bodyElements):
+def getHtmlDoc(headings, bodyElements):
     '''
     Returns a string representing a full HTML document with content
     and link to a stylesheet
     Arguments:
+        headings: a list of strings to use as h1 content for each body element
         bodyElements: a list of HTML strings representing HTML elements
     Returns:
         a string with HTML format
@@ -362,8 +363,9 @@ def getHtmlDoc(bodyElements):
     doc += "\t<title> SLR table </title>\n"
     doc += "</head>\n"
     doc += "<body>\n"
-    for element in bodyElements:
-        doc += f"{element}\n"
+    for i in range(len(bodyElements)):
+        doc += f"<h1>{headings[i]}</h1>\n"
+        doc += f"{bodyElements[i]}\n"
     doc += "</body>\n"
     doc += "</html>\n"
     return doc
@@ -748,7 +750,11 @@ for i in range(numberOfStrings):
 acceptTableHeader = getTableHeader(["Input string", "Parse result"])
 acceptTable = getTable(acceptTableHeader, acceptTableRows)
 
-htmlDoc = getHtmlDoc([slrTable, acceptTable, treeTable] + parseTables)
+tableHeadings = ["SLR analysis table", "Input string parse results", "SLR tree item data"]
+for i in range(len(parseTables)):
+    tableHeadings.append(f"Parse process for string #{i + 1}")
+
+htmlDoc = getHtmlDoc(tableHeadings, [slrTable, acceptTable, treeTable] + parseTables)
 print(htmlDoc)
 
 # Qs
