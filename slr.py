@@ -499,25 +499,22 @@ newItemIndex = len(itemKernels) - 1
 itemQueue.insert(newItemIndex)
 
 # Build item tree, breath first traversal
+treeTableRows = []
 while not itemQueue.empty():
     itemIndex = itemQueue.remove()
 
-    print(f"\n\nItem #{itemIndex}")
+    treeCellValues = [itemIndex]
+
     # Duplicate productions from kernel into list for convenience
     itemProductions.append([])
-    print("-------------------------------")
-    print("Kernel: ")
     for productionWithDot in itemKernels[itemIndex]:
-        print(productionWithDot)
         itemProductions[itemIndex].append(productionWithDot)
+    treeCellValues.append("\n".join(map(str, itemProductions[itemIndex])))
 
     # Add productions of non-terminals with dot before them to item
-    print("-------------------------------")
-    print("Whole list: ")
     i = 0
     while i < len(itemProductions[itemIndex]):
         productionWithDot = itemProductions[itemIndex][i]
-        print(productionWithDot)
         underlinedSymbol = productionWithDot.underlined()
         if underlinedSymbol in nonTerminals:
             for production in productionsOf[underlinedSymbol]:
@@ -525,11 +522,11 @@ while not itemQueue.empty():
                 if newProductionWithDot not in itemProductions[itemIndex]:
                     itemProductions[itemIndex].append(newProductionWithDot)
         i += 1  
+    treeCellValues.append("\n".join(map(str, itemProductions[itemIndex])))
 
     # Derive for each terminal and non-terminal
-    print("-------------------------------")
-    print("Transitions: ")
     itemTransitions.append(dict())
+    transitionsStrings = []
 
     for symbol in symbols:
         derivedKernel = set()
@@ -554,8 +551,15 @@ while not itemQueue.empty():
 
         # Store transitions between items
         itemTransitions[itemIndex][symbol] = destinationIndex
-        print(f"Under {symbol} moves to {destinationIndex}")
+        transitionsStrings.append(f"Under {symbol} moves to {destinationIndex}")
       
+    treeCellValues.append("\n".join(transitionsStrings))
+    treeTableRow = getTableRow(treeCellValues)
+    treeTableRows.append(treeTableRow)
+
+treeTableHeader = getTableHeader(["Item", "Kernel", "Whole list", "Transitions"])
+treeTable = getTable(treeTableHeader, treeTableRows)
+
 # Store shift actions
 itemActions = []
 for itemIndex in range(len(itemKernels)):
@@ -653,7 +657,6 @@ for i in range(numberOfStrings):
 
     parseTableRows = []
     
-    print(f"\nchecking string {rawStrings[i]}:")
     while True:
         parseCellValues = [" ".join(map(str, stack)), " ".join(map(str, reversed(string)))]
 
@@ -724,10 +727,9 @@ for i in range(numberOfStrings):
 acceptTableHeader = getTableHeader(["Input string", "Parse result"])
 acceptTable = getTable(acceptTableHeader, acceptTableRows)
 
-htmlDoc = getHtmlDoc([slrTable, acceptTable] + parseTables)
+htmlDoc = getHtmlDoc([slrTable, acceptTable, treeTable] + parseTables)
 print(htmlDoc)
 
 # Qs
 # Do we need to validate overlap in table cell, how to handle when this happens
 # How to process epsilon prods in SLR tree generation
-# make retrieve from dict error more descriptive
