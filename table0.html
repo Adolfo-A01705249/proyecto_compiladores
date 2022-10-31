@@ -14,21 +14,21 @@ two -> . a
 two -> . b
 -------------------------------
 Transitions: 
-Under b moves to 1
-Under goal moves to 2
-Under ( moves to 3
-Under two moves to 4
-Under A moves to 5
+Under A moves to 1
+Under two moves to 2
+Under b moves to 3
+Under ( moves to 4
+Under goal moves to 5
 Under a moves to 6
 
 
 Item #1
 -------------------------------
 Kernel: 
-two -> b . 
+goal -> A . 
 -------------------------------
 Whole list: 
-two -> b . 
+goal -> A . 
 -------------------------------
 Transitions: 
 
@@ -36,15 +36,26 @@ Transitions:
 Item #2
 -------------------------------
 Kernel: 
-A01705249 -> goal . 
+A -> two . 
 -------------------------------
 Whole list: 
-A01705249 -> goal . 
+A -> two . 
 -------------------------------
 Transitions: 
 
 
 Item #3
+-------------------------------
+Kernel: 
+two -> b . 
+-------------------------------
+Whole list: 
+two -> b . 
+-------------------------------
+Transitions: 
+
+
+Item #4
 -------------------------------
 Kernel: 
 A -> ( . A )
@@ -57,31 +68,20 @@ two -> . a
 two -> . b
 -------------------------------
 Transitions: 
-Under b moves to 1
-Under ( moves to 3
-Under two moves to 4
 Under A moves to 7
+Under two moves to 2
+Under b moves to 3
+Under ( moves to 4
 Under a moves to 6
-
-
-Item #4
--------------------------------
-Kernel: 
-A -> two . 
--------------------------------
-Whole list: 
-A -> two . 
--------------------------------
-Transitions: 
 
 
 Item #5
 -------------------------------
 Kernel: 
-goal -> A . 
+A01705249 -> goal . 
 -------------------------------
 Whole list: 
-goal -> A . 
+A01705249 -> goal . 
 -------------------------------
 Transitions: 
 
@@ -151,22 +151,22 @@ checking string ( ( ( ( ( a b ) ) ) ) ):
 	<th> two </th>
 </tr><tr>
 	<td> 0 </td>
-	<td> S3 </td>
+	<td> S4 </td>
 	<td>  </td>
 	<td> S6 </td>
-	<td> S1 </td>
+	<td> S3 </td>
 	<td>  </td>
+	<td> 1 </td>
 	<td> 5 </td>
 	<td> 2 </td>
-	<td> 4 </td>
 </tr>
 <tr>
 	<td> 1 </td>
 	<td>  </td>
-	<td> R5 </td>
 	<td>  </td>
 	<td>  </td>
-	<td> R5 </td>
+	<td>  </td>
+	<td> R1 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -174,35 +174,35 @@ checking string ( ( ( ( ( a b ) ) ) ) ):
 <tr>
 	<td> 2 </td>
 	<td>  </td>
+	<td> R3 </td>
 	<td>  </td>
 	<td>  </td>
-	<td>  </td>
-	<td> AC </td>
+	<td> R3 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
 </tr>
 <tr>
 	<td> 3 </td>
-	<td> S3 </td>
 	<td>  </td>
-	<td> S6 </td>
-	<td> S1 </td>
+	<td> R5 </td>
 	<td>  </td>
-	<td> 7 </td>
 	<td>  </td>
-	<td> 4 </td>
+	<td> R5 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
 </tr>
 <tr>
 	<td> 4 </td>
+	<td> S4 </td>
 	<td>  </td>
-	<td> R3 </td>
+	<td> S6 </td>
+	<td> S3 </td>
 	<td>  </td>
+	<td> 7 </td>
 	<td>  </td>
-	<td> R3 </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
+	<td> 2 </td>
 </tr>
 <tr>
 	<td> 5 </td>
@@ -210,7 +210,7 @@ checking string ( ( ( ( ( a b ) ) ) ) ):
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
-	<td> R1 </td>
+	<td> AC </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -265,11 +265,11 @@ checking string ( ( ( ( ( a b ) ) ) ) ):
 </tr>
 <tr>
 	<td> ( a ) ) </td>
-	<td> Unaccepted. Error: a required table value doesn't exist. </td>
+	<td> Unaccepted. Error: a required table value (1, ")"), doesn't exist. </td>
 </tr>
 <tr>
 	<td> ( ( ( ( ( a b ) ) ) ) ) </td>
-	<td> Unaccepted. Error: a required table value doesn't exist. </td>
+	<td> Unaccepted. Error: a required table value (6, "b"), doesn't exist. </td>
 </tr>
 </table>
 
@@ -282,80 +282,80 @@ checking string ( ( ( ( ( a b ) ) ) ) ):
 <tr>
 	<td> 0 </td>
 	<td> ( ( a ) ) $ </td>
-	<td> Shift 3 </td>
+	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0(3 </td>
+	<td> 0 ( 4 </td>
 	<td> ( a ) ) $ </td>
-	<td> Shift 3 </td>
+	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0(3(3 </td>
+	<td> 0 ( 4 ( 4 </td>
 	<td> a ) ) $ </td>
 	<td> Shift 6 </td>
 </tr>
 <tr>
-	<td> 0(3(3a6 </td>
+	<td> 0 ( 4 ( 4 a 6 </td>
 	<td> ) ) $ </td>
 	<td> Reduce 4 </td>
 </tr>
 <tr>
-	<td> 0(3(3two </td>
+	<td> 0 ( 4 ( 4 two </td>
 	<td> ) ) $ </td>
-	<td> Goto 4 </td>
+	<td> Goto 2 </td>
 </tr>
 <tr>
-	<td> 0(3(3two4 </td>
+	<td> 0 ( 4 ( 4 two 2 </td>
 	<td> ) ) $ </td>
 	<td> Reduce 3 </td>
 </tr>
 <tr>
-	<td> 0(3(3A </td>
+	<td> 0 ( 4 ( 4 A </td>
 	<td> ) ) $ </td>
-	<td> Goto 4 </td>
+	<td> Goto 2 </td>
 </tr>
 <tr>
-	<td> 0(3(3A7 </td>
+	<td> 0 ( 4 ( 4 A 7 </td>
 	<td> ) ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0(3(3A7)8 </td>
+	<td> 0 ( 4 ( 4 A 7 ) 8 </td>
 	<td> ) $ </td>
 	<td> Reduce 2 </td>
 </tr>
 <tr>
-	<td> 0(3A </td>
+	<td> 0 ( 4 A </td>
 	<td> ) $ </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0(3A7 </td>
+	<td> 0 ( 4 A 7 </td>
 	<td> ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0(3A7)8 </td>
+	<td> 0 ( 4 A 7 ) 8 </td>
 	<td> $ </td>
 	<td> Reduce 2 </td>
 </tr>
 <tr>
-	<td> 0A </td>
+	<td> 0 A </td>
 	<td> $ </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0A5 </td>
+	<td> 0 A 1 </td>
 	<td> $ </td>
 	<td> Reduce 1 </td>
 </tr>
 <tr>
-	<td> 0goal </td>
+	<td> 0 goal </td>
 	<td> $ </td>
-	<td> Goto 5 </td>
+	<td> Goto 1 </td>
 </tr>
 <tr>
-	<td> 0goal2 </td>
+	<td> 0 goal 5 </td>
 	<td> $ </td>
 	<td> Accepted </td>
 </tr>
@@ -370,140 +370,140 @@ checking string ( ( ( ( ( a b ) ) ) ) ):
 <tr>
 	<td> 0 </td>
 	<td> ( ( ( ( ( b ) ) ) ) ) $ </td>
-	<td> Shift 3 </td>
+	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0(3 </td>
+	<td> 0 ( 4 </td>
 	<td> ( ( ( ( b ) ) ) ) ) $ </td>
-	<td> Shift 3 </td>
+	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0(3(3 </td>
+	<td> 0 ( 4 ( 4 </td>
 	<td> ( ( ( b ) ) ) ) ) $ </td>
-	<td> Shift 3 </td>
+	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3 </td>
+	<td> 0 ( 4 ( 4 ( 4 </td>
 	<td> ( ( b ) ) ) ) ) $ </td>
-	<td> Shift 3 </td>
+	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3(3 </td>
+	<td> 0 ( 4 ( 4 ( 4 ( 4 </td>
 	<td> ( b ) ) ) ) ) $ </td>
+	<td> Shift 4 </td>
+</tr>
+<tr>
+	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 </td>
+	<td> b ) ) ) ) ) $ </td>
 	<td> Shift 3 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3(3(3 </td>
-	<td> b ) ) ) ) ) $ </td>
-	<td> Shift 1 </td>
-</tr>
-<tr>
-	<td> 0(3(3(3(3(3b1 </td>
+	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 b 3 </td>
 	<td> ) ) ) ) ) $ </td>
 	<td> Reduce 5 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3(3(3two </td>
+	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 two </td>
 	<td> ) ) ) ) ) $ </td>
-	<td> Goto 2 </td>
+	<td> Goto 5 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3(3(3two4 </td>
+	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 two 2 </td>
 	<td> ) ) ) ) ) $ </td>
 	<td> Reduce 3 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3(3(3A </td>
+	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 A </td>
 	<td> ) ) ) ) ) $ </td>
-	<td> Goto 4 </td>
+	<td> Goto 2 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3(3(3A7 </td>
+	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 A 7 </td>
 	<td> ) ) ) ) ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3(3(3A7)8 </td>
+	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 A 7 ) 8 </td>
 	<td> ) ) ) ) $ </td>
 	<td> Reduce 2 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3(3A </td>
+	<td> 0 ( 4 ( 4 ( 4 ( 4 A </td>
 	<td> ) ) ) ) $ </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3(3A7 </td>
+	<td> 0 ( 4 ( 4 ( 4 ( 4 A 7 </td>
 	<td> ) ) ) ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3(3A7)8 </td>
+	<td> 0 ( 4 ( 4 ( 4 ( 4 A 7 ) 8 </td>
 	<td> ) ) ) $ </td>
 	<td> Reduce 2 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3A </td>
+	<td> 0 ( 4 ( 4 ( 4 A </td>
 	<td> ) ) ) $ </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3A7 </td>
+	<td> 0 ( 4 ( 4 ( 4 A 7 </td>
 	<td> ) ) ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3A7)8 </td>
+	<td> 0 ( 4 ( 4 ( 4 A 7 ) 8 </td>
 	<td> ) ) $ </td>
 	<td> Reduce 2 </td>
 </tr>
 <tr>
-	<td> 0(3(3A </td>
+	<td> 0 ( 4 ( 4 A </td>
 	<td> ) ) $ </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0(3(3A7 </td>
+	<td> 0 ( 4 ( 4 A 7 </td>
 	<td> ) ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0(3(3A7)8 </td>
+	<td> 0 ( 4 ( 4 A 7 ) 8 </td>
 	<td> ) $ </td>
 	<td> Reduce 2 </td>
 </tr>
 <tr>
-	<td> 0(3A </td>
+	<td> 0 ( 4 A </td>
 	<td> ) $ </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0(3A7 </td>
+	<td> 0 ( 4 A 7 </td>
 	<td> ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0(3A7)8 </td>
+	<td> 0 ( 4 A 7 ) 8 </td>
 	<td> $ </td>
 	<td> Reduce 2 </td>
 </tr>
 <tr>
-	<td> 0A </td>
+	<td> 0 A </td>
 	<td> $ </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0A5 </td>
+	<td> 0 A 1 </td>
 	<td> $ </td>
 	<td> Reduce 1 </td>
 </tr>
 <tr>
-	<td> 0goal </td>
+	<td> 0 goal </td>
 	<td> $ </td>
-	<td> Goto 5 </td>
+	<td> Goto 1 </td>
 </tr>
 <tr>
-	<td> 0goal2 </td>
+	<td> 0 goal 5 </td>
 	<td> $ </td>
 	<td> Accepted </td>
 </tr>
@@ -518,52 +518,52 @@ checking string ( ( ( ( ( a b ) ) ) ) ):
 <tr>
 	<td> 0 </td>
 	<td> ( a ) ) $ </td>
-	<td> Shift 3 </td>
+	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0(3 </td>
+	<td> 0 ( 4 </td>
 	<td> a ) ) $ </td>
 	<td> Shift 6 </td>
 </tr>
 <tr>
-	<td> 0(3a6 </td>
+	<td> 0 ( 4 a 6 </td>
 	<td> ) ) $ </td>
 	<td> Reduce 4 </td>
 </tr>
 <tr>
-	<td> 0(3two </td>
+	<td> 0 ( 4 two </td>
 	<td> ) ) $ </td>
-	<td> Goto 2 </td>
+	<td> Goto 5 </td>
 </tr>
 <tr>
-	<td> 0(3two4 </td>
+	<td> 0 ( 4 two 2 </td>
 	<td> ) ) $ </td>
 	<td> Reduce 3 </td>
 </tr>
 <tr>
-	<td> 0(3A </td>
+	<td> 0 ( 4 A </td>
 	<td> ) ) $ </td>
-	<td> Goto 4 </td>
+	<td> Goto 2 </td>
 </tr>
 <tr>
-	<td> 0(3A7 </td>
+	<td> 0 ( 4 A 7 </td>
 	<td> ) ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0(3A7)8 </td>
+	<td> 0 ( 4 A 7 ) 8 </td>
 	<td> ) $ </td>
 	<td> Reduce 2 </td>
 </tr>
 <tr>
-	<td> 0A </td>
+	<td> 0 A </td>
 	<td> ) $ </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0A5 </td>
+	<td> 0 A 1 </td>
 	<td> ) $ </td>
-	<td> Error: a required table value doesn't exist. </td>
+	<td> Error: a required table value (1, ")"), doesn't exist. </td>
 </tr>
 </table>
 
@@ -576,37 +576,37 @@ checking string ( ( ( ( ( a b ) ) ) ) ):
 <tr>
 	<td> 0 </td>
 	<td> ( ( ( ( ( a b ) ) ) ) ) $ </td>
-	<td> Shift 3 </td>
+	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0(3 </td>
+	<td> 0 ( 4 </td>
 	<td> ( ( ( ( a b ) ) ) ) ) $ </td>
-	<td> Shift 3 </td>
+	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0(3(3 </td>
+	<td> 0 ( 4 ( 4 </td>
 	<td> ( ( ( a b ) ) ) ) ) $ </td>
-	<td> Shift 3 </td>
+	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3 </td>
+	<td> 0 ( 4 ( 4 ( 4 </td>
 	<td> ( ( a b ) ) ) ) ) $ </td>
-	<td> Shift 3 </td>
+	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3(3 </td>
+	<td> 0 ( 4 ( 4 ( 4 ( 4 </td>
 	<td> ( a b ) ) ) ) ) $ </td>
-	<td> Shift 3 </td>
+	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3(3(3 </td>
+	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 </td>
 	<td> a b ) ) ) ) ) $ </td>
 	<td> Shift 6 </td>
 </tr>
 <tr>
-	<td> 0(3(3(3(3(3a6 </td>
+	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 a 6 </td>
 	<td> b ) ) ) ) ) $ </td>
-	<td> Error: a required table value doesn't exist. </td>
+	<td> Error: a required table value (6, "b"), doesn't exist. </td>
 </tr>
 </table>
 

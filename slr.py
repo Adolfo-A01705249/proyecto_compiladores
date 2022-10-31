@@ -236,15 +236,12 @@ def insertIntoDict(aDict, key, value):
     else:
         sys.exit(f"Error: overlap in SLR table cell.")
 
-def retrieveFromDict(aDict, key):
-    '''
-
-    '''
-    if key in aDict.keys():
-        return aDict[key]
+def retrieveFromDict(dictArray, index, key):
+    if key in dictArray[index].keys():
+        return dictArray[index][key]
     else:
         parsingErrorData[ERROR] = True
-        parsingErrorData[MESSAGE] = "Error: a required table value doesn't exist."
+        parsingErrorData[MESSAGE] = f"Error: a required table value ({index}, \"{key}\"), doesn't exist."
 
 def checkTokenInGrammar(token):
     '''
@@ -658,7 +655,7 @@ for i in range(numberOfStrings):
     
     print(f"\nchecking string {rawStrings[i]}:")
     while True:
-        parseCellValues = ["".join(map(str, stack)), " ".join(map(str, reversed(string)))]
+        parseCellValues = [" ".join(map(str, stack)), " ".join(map(str, reversed(string)))]
 
         itemIndex = top(stack, "stack")
         if parsingErrorData[ERROR]: break
@@ -667,7 +664,7 @@ for i in range(numberOfStrings):
         checkTokenInGrammar(stringToken)
         if parsingErrorData[ERROR]: break
 
-        action = retrieveFromDict(itemActions[itemIndex], stringToken)
+        action = retrieveFromDict(itemActions, itemIndex, stringToken)
         if parsingErrorData[ERROR]: break
         actionType = action[0]
         actionParameter = action[1]
@@ -693,17 +690,17 @@ for i in range(numberOfStrings):
             stack.append(productionHeader)
             
             # Goto continuation
-            parseCellValues = ["".join(map(str, stack)), " ".join(map(str, reversed(string)))]
+            parseCellValues = [" ".join(map(str, stack)), " ".join(map(str, reversed(string)))]
             parseCellValues.append(f"Goto {destinationIndex}")
 
-            destinationIndex = retrieveFromDict(itemTransitions[topIndex], productionHeader)
+            destinationIndex = retrieveFromDict(itemTransitions, topIndex, productionHeader)
             if parsingErrorData[ERROR]: break
             stack.append(destinationIndex)
 
         elif actionType == ACCEPT:
             parsingResultMessage = "Accepted."
 
-            parseCellValues.append("Accepted")
+            parseCellValues.append("Accept")
             parseTableRows.append(getTableRow(parseCellValues))
 
             break
@@ -713,7 +710,7 @@ for i in range(numberOfStrings):
     if parsingErrorData[ERROR]:
         parsingResultMessage = f"Unaccepted. {parsingErrorData[MESSAGE]}"
 
-        parseCellValues = ["".join(map(str, stack)), " ".join(map(str, reversed(string)))]
+        parseCellValues = [" ".join(map(str, stack)), " ".join(map(str, reversed(string)))]
         parseCellValues.append(parsingErrorData[MESSAGE])
         parseTableRows.append(getTableRow(parseCellValues))
 
@@ -731,6 +728,6 @@ htmlDoc = getHtmlDoc([slrTable, acceptTable] + parseTables)
 print(htmlDoc)
 
 # Qs
-# Do we need to validate overlap in table cell
+# Do we need to validate overlap in table cell, how to handle when this happens
 # How to process epsilon prods in SLR tree generation
 # make retrieve from dict error more descriptive
