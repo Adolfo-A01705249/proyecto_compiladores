@@ -9,7 +9,7 @@ import sys
 
 EPSILON = '\' \''
 EOF ='$'
-DOT = "."
+DOT = "•"
 SHIFT = "S"
 REDUCE = "R"
 ACCEPT = "AC"
