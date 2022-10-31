@@ -642,7 +642,9 @@ for i in range(numberOfStrings):
 # Parse each string with SLR table  
 actionSymbols = terminals.union(EOF)
 parsingErrorData = [None, None]
+
 acceptTableRows = []
+parseTables = []
 
 for i in range(numberOfStrings):
     stack = [0]
@@ -651,9 +653,13 @@ for i in range(numberOfStrings):
 
     parsingErrorData = [False, ""]
     parsingResultMessage = None
+
+    parseTableRows = []
     
     print(f"\nchecking string {rawStrings[i]}:")
     while True:
+        parseCellValues = ["".join(map(str, stack)), " ".join(map(str, reversed(string)))]
+
         itemIndex = top(stack, "stack")
         if parsingErrorData[ERROR]: break
         stringToken = top(string, "input string")
@@ -667,12 +673,15 @@ for i in range(numberOfStrings):
         actionParameter = action[1]
 
         if actionType == SHIFT:
-            print(f"shift {actionParameter}")
+            parseCellValues.append(f"Shift {actionParameter}")
+
             stack.append(string.pop())
             stack.append(actionParameter)
 
         elif actionType == REDUCE:
-            print(f"reduce {actionParameter}")
+            parseCellValues.append(f"Reduce {actionParameter}")
+            parseTableRows.append(getTableRow(parseCellValues))
+
             tokensToRemove = 2 * bodyLength(productions[actionParameter])
             for j in range(tokensToRemove):
                 top(stack, "stack")
@@ -682,29 +691,46 @@ for i in range(numberOfStrings):
             if parsingErrorData[ERROR]: break    
             productionHeader = header(productions[actionParameter])
             stack.append(productionHeader)
-
+            
             # Goto continuation
+            parseCellValues = ["".join(map(str, stack)), " ".join(map(str, reversed(string)))]
+            parseCellValues.append(f"Goto {destinationIndex}")
+
             destinationIndex = retrieveFromDict(itemTransitions[topIndex], productionHeader)
             if parsingErrorData[ERROR]: break
             stack.append(destinationIndex)
-            print(f"goto {destinationIndex}")
 
         elif actionType == ACCEPT:
             parsingResultMessage = "Accepted."
+
+            parseCellValues.append("Accepted")
+            parseTableRows.append(getTableRow(parseCellValues))
+
             break
-    
+        
+        parseTableRows.append(getTableRow(parseCellValues))
+
     if parsingErrorData[ERROR]:
         parsingResultMessage = f"Unaccepted. {parsingErrorData[MESSAGE]}"
 
-    tableRow = getTableRow([rawStrings[i], parsingResultMessage])
-    acceptTableRows.append(tableRow)
+        parseCellValues = ["".join(map(str, stack)), " ".join(map(str, reversed(string)))]
+        parseCellValues.append(parsingErrorData[MESSAGE])
+        parseTableRows.append(getTableRow(parseCellValues))
+
+    acceptTableRow = getTableRow([rawStrings[i], parsingResultMessage])
+    acceptTableRows.append(acceptTableRow)
+
+    parseTableHeader = getTableHeader(["Stack", "String", "Action to perform"])
+    parseTable = getTable(parseTableHeader, parseTableRows)
+    parseTables.append(parseTable)
 
 acceptTableHeader = getTableHeader(["Input string", "Parse result"])
 acceptTable = getTable(acceptTableHeader, acceptTableRows)
 
-htmlDoc = getHtmlDoc([slrTable, acceptTable])
+htmlDoc = getHtmlDoc([slrTable, acceptTable] + parseTables)
 print(htmlDoc)
 
 # Qs
 # Do we need to validate overlap in table cell
 # How to process epsilon prods in SLR tree generation
+# make retrieve from dict error more descriptive
