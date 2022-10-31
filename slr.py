@@ -1,26 +1,29 @@
-# Prints a list of a grammar's non-terminal's FIRSTS and FOLLOWS
+# Generates a SLR analysis table and uses it to try and parse strings
 
-# usage: $python parser.py < <input file>
+# usage: $python SLR.py < <input file>
 
 # Author: Adolfo Acosta Castro [A01705249]
 # Date: 2022/10/30
 
 import sys
 
-from sklearn import tree
-
 EPSILON = '\' \''
 EOF ='$'
-BODY_START_INDEX = 2
 DOT = "."
 SHIFT = "S"
 REDUCE = "R"
 ACCEPT = "AC"
 UNIQUE_TOKEN = "A01705249"
+BODY_START_INDEX = 2
 STYLESHEET = "styles.css"
-
+ERROR = 0
+MESSAGE = 1
 
 class Queue:
+    """
+    A simple FIFO queue data structure built
+    space-inefficiently on top of a list
+    """
     values = []
     frontIndex = 0
 
@@ -36,6 +39,10 @@ class Queue:
         return (self.frontIndex == len(self.values))
 
 class ProductionWithDot:
+    '''
+    A grammar production with a marker (dot) that
+    can be moved between the body's symbols
+    '''
     production = None
     dotIndex = None # Index of symbol that is right after the dot
 
@@ -62,11 +69,18 @@ class ProductionWithDot:
         return advancedProduction
 
     def completed(self):
+        '''
+        Returns true if the dot has advanced to 
+        the end of the production's body
+        '''
         if self.production[BODY_START_INDEX] == EPSILON:
             return True
         return (not self.dotIndex < len(self.production))
 
     def getProduction(self):
+        '''
+        Returns the objects production
+        '''
         return self.production
 
     def __eq__(self, other):
@@ -92,21 +106,6 @@ class ProductionWithDot:
 
         return stringRep
 
-
-def setToString(set, separator):
-    """
-    Creates a string made of the elements of a set 
-    separated by a given string
-    Arguments:
-        set: a python set
-        separator: the string to insert between set elements
-    Returns:
-        The string created with the list of set elements
-    """
-    resultString = ""
-    for item in set:
-        resultString += item + separator
-    return resultString[:-len(separator)]
 
 def header(production):
     '''
@@ -141,16 +140,19 @@ def bodyLength(production):
         return 0
     return (len(production) - 2)
 
-def top(stack):
+def top(stack, name):
     '''
-    Returns the top-most value of a stack
+    Returns the top-most value of a stack. If the stack is empty,
+    it sets the parsing error data values.
     Arguments:
         stack: a python list
+        name: a string representing a descriptive name for the stack
     Returns:
         The element on the last position of the list
     '''
     if not len(stack) > 0:
-        sys.exit("Error: no more tokens in stack or string.")
+        parsingErrorData[ERROR] = True
+        parsingErrorData[MESSAGE] = "Error: tried to remove a token from the {name} but it was empty."
 
     return stack[-1]
 
@@ -235,10 +237,27 @@ def insertIntoDict(aDict, key, value):
         sys.exit(f"Error: overlap in SLR table cell.")
 
 def retrieveFromDict(aDict, key):
+    '''
+
+    '''
     if key in aDict.keys():
         return aDict[key]
     else:
-        sys.exit(f"Error: required action doesn't exist.")
+        parsingErrorData[ERROR] = True
+        parsingErrorData[MESSAGE] = "Error: a required table value doesn't exist."
+
+def checkTokenInGrammar(token):
+    '''
+    Validates that a token from an input string
+    is a terminal or the end of file token.
+    In case of an error, uses global variables to indicate an
+    error and a descriptive message.
+    Arguments:
+        token: the token to validate
+    '''
+    if token not in actionSymbols:
+        parsingErrorData[ERROR] = True
+        parsingErrorData[MESSAGE] = f"Error: input string has a symbol ({token}) that is not recognized by the grammar."
 
 def getTableHeader(terminalsArray, nonTerminalsArray):
     '''
@@ -312,10 +331,6 @@ def getHtmlDoc(table):
     doc += "<body>\n" + table + "</body>\n"
     doc += "</html>\n"
     return doc
-
-def checkTokenInGrammar(token):
-    if token not in actionSymbols:
-        sys.exit("Error: string has a symbol not recognized by the grammar.")
 
 
 #---------------------------------------------------------------
@@ -608,18 +623,25 @@ for i in range(numberOfStrings):
 
 # Parse each string with SLR table  
 actionSymbols = terminals.union(EOF)
+parsingErrorData = [None, None]
 
 for i in range(numberOfStrings):
     stack = [0]
+    parsingErrorData = [False, ""]
+    parsingResultMessage = None
     string = strings[i].copy()
     string.reverse()
     print(f"\nchecking string {rawStrings[i]}:")
     while True:
-        itemIndex = top(stack)
-        stringToken = top(string)
+        itemIndex = top(stack, "stack")
+        if parsingErrorData[ERROR]: break
+        stringToken = top(string, "input string")
+        if parsingErrorData[ERROR]: break
         checkTokenInGrammar(stringToken)
+        if parsingErrorData[ERROR]: break
 
         action = retrieveFromDict(itemActions[itemIndex], stringToken)
+        if parsingErrorData[ERROR]: break
         actionType = action[0]
         actionParameter = action[1]
 
@@ -632,21 +654,29 @@ for i in range(numberOfStrings):
             print(f"reduce {actionParameter}")
             tokensToRemove = 2 * bodyLength(productions[actionParameter])
             for j in range(tokensToRemove):
-                top(stack)
+                top(stack, "stack")
+                if parsingErrorData[ERROR]: break
                 stack.pop()
-            topIndex = top(stack)        
+            topIndex = top(stack, "stack")
+            if parsingErrorData[ERROR]: break    
             productionHeader = header(productions[actionParameter])
             stack.append(productionHeader)
 
             # Goto continuation
             destinationIndex = retrieveFromDict(itemTransitions[topIndex], productionHeader)
+            if parsingErrorData[ERROR]: break
             stack.append(destinationIndex)
             print(f"goto {destinationIndex}")
 
         elif actionType == ACCEPT:
-            print(f"string {rawStrings[i]} accepted")
+            parsingResultMessage = "Accepted."
             break
-            
+    
+    if parsingErrorData[ERROR]:
+        parsingResultMessage = f"Unaccepted. {parsingErrorData[MESSAGE]}"
+
+    print(f"String {rawStrings[i]}: {parsingResultMessage}")
+
 # Qs
 # Do we need to validate overlap in table cell
 # How to process epsilon prods in SLR tree generation
