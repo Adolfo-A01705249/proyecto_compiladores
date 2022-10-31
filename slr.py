@@ -293,6 +293,27 @@ def getTableHeader(headers):
     tableHeader = "<tr>\n" + headerCells + "</tr>\n"
     return tableHeader
 
+def getTreeTableRow(itemIndex, cellLists):
+    '''
+    Returns a string representing a row of the SLR item tree table
+    with HTML format
+    Arguments:
+        itemIndex: an integer, the id of a tree item
+        cellLists: a lists of lists, one list to be included per cell
+    Returns:
+        a string with HTML format
+    '''
+    rowCells = f"\t<td> {itemIndex} </td>\n"
+    for cellList in cellLists:
+        rowCells += f"\t<td class=\"list_cell\">\n"
+        rowCells += f"\t\t<ul>\n"
+        for value in cellList:
+            rowCells += f"\t\t\t<li> {value} </li>\n"
+        rowCells += f"\t\t</ul>\n"
+        rowCells += f"\t</td>\n"
+    tableRow = "<tr>\n" + rowCells + "</tr>\n"
+    return tableRow
+
 def getTableRow(cellValues):
     '''
     Returns a string representing a row of the SLR table
@@ -503,13 +524,13 @@ treeTableRows = []
 while not itemQueue.empty():
     itemIndex = itemQueue.remove()
 
-    treeCellValues = [itemIndex]
+    treeCellValues = []
 
     # Duplicate productions from kernel into list for convenience
     itemProductions.append([])
     for productionWithDot in itemKernels[itemIndex]:
         itemProductions[itemIndex].append(productionWithDot)
-    treeCellValues.append("\n".join(map(str, itemProductions[itemIndex])))
+    treeCellValues.append(itemProductions[itemIndex])
 
     # Add productions of non-terminals with dot before them to item
     i = 0
@@ -522,7 +543,7 @@ while not itemQueue.empty():
                 if newProductionWithDot not in itemProductions[itemIndex]:
                     itemProductions[itemIndex].append(newProductionWithDot)
         i += 1  
-    treeCellValues.append("\n".join(map(str, itemProductions[itemIndex])))
+    treeCellValues.append(itemProductions[itemIndex])
 
     # Derive for each terminal and non-terminal
     itemTransitions.append(dict())
@@ -553,8 +574,8 @@ while not itemQueue.empty():
         itemTransitions[itemIndex][symbol] = destinationIndex
         transitionsStrings.append(f"Under {symbol} moves to {destinationIndex}")
       
-    treeCellValues.append("\n".join(transitionsStrings))
-    treeTableRow = getTableRow(treeCellValues)
+    treeCellValues.append(transitionsStrings)
+    treeTableRow = getTreeTableRow(itemIndex, treeCellValues)
     treeTableRows.append(treeTableRow)
 
 treeTableHeader = getTableHeader(["Item", "Kernel", "Whole list", "Transitions"])

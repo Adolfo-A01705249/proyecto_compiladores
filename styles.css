@@ -35,3 +35,12 @@ table {
 h1 {
     color: #373b3e;
 }
+
+ul {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.list_cell {
+    text-align: left;
+}

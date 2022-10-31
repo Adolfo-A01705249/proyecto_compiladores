@@ -23,39 +23,28 @@
 	<th> two </th>
 </tr><tr>
 	<td> 0 </td>
-	<td> S4 </td>
-	<td>  </td>
-	<td> S5 </td>
 	<td> S1 </td>
 	<td>  </td>
-	<td> 3 </td>
+	<td> S4 </td>
+	<td> S5 </td>
+	<td>  </td>
 	<td> 2 </td>
+	<td> 3 </td>
 	<td> 6 </td>
 </tr>
 <tr>
 	<td> 1 </td>
+	<td> S1 </td>
 	<td>  </td>
-	<td> R5 </td>
+	<td> S4 </td>
+	<td> S5 </td>
 	<td>  </td>
+	<td> 7 </td>
 	<td>  </td>
-	<td> R5 </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
+	<td> 6 </td>
 </tr>
 <tr>
 	<td> 2 </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td> AC </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-</tr>
-<tr>
-	<td> 3 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -66,23 +55,34 @@
 	<td>  </td>
 </tr>
 <tr>
+	<td> 3 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> AC </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
 	<td> 4 </td>
-	<td> S4 </td>
 	<td>  </td>
-	<td> S5 </td>
-	<td> S1 </td>
+	<td> R4 </td>
 	<td>  </td>
-	<td> 7 </td>
 	<td>  </td>
-	<td> 6 </td>
+	<td> R4 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
 </tr>
 <tr>
 	<td> 5 </td>
 	<td>  </td>
-	<td> R4 </td>
+	<td> R5 </td>
 	<td>  </td>
 	<td>  </td>
-	<td> R4 </td>
+	<td> R5 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -137,11 +137,11 @@
 </tr>
 <tr>
 	<td> ( a ) ) </td>
-	<td> Unaccepted. Error: a required table value (3, ")"), doesn't exist. </td>
+	<td> Unaccepted. Error: a required table value (2, ")"), doesn't exist. </td>
 </tr>
 <tr>
 	<td> ( ( ( ( ( a b ) ) ) ) ) </td>
-	<td> Unaccepted. Error: a required table value (5, "b"), doesn't exist. </td>
+	<td> Unaccepted. Error: a required table value (4, "b"), doesn't exist. </td>
 </tr>
 </table>
 
@@ -154,75 +154,186 @@
 </tr>
 <tr>
 	<td> 0 </td>
-	<td> A01705249 -> • goal </td>
-	<td> A01705249 -> • goal
-goal -> • A
-A -> • ( A )
-A -> • two
-two -> • a
-two -> • b </td>
-	<td> Under b moves to 1
-Under goal moves to 2
-Under A moves to 3
-Under ( moves to 4
-Under a moves to 5
-Under two moves to 6 </td>
+	<td class="list_cell">
+		<ul>
+			<li> A01705249 -> • goal </li>
+			<li> goal -> • A </li>
+			<li> A -> • ( A ) </li>
+			<li> A -> • two </li>
+			<li> two -> • a </li>
+			<li> two -> • b </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> A01705249 -> • goal </li>
+			<li> goal -> • A </li>
+			<li> A -> • ( A ) </li>
+			<li> A -> • two </li>
+			<li> two -> • a </li>
+			<li> two -> • b </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Under ( moves to 1 </li>
+			<li> Under A moves to 2 </li>
+			<li> Under goal moves to 3 </li>
+			<li> Under a moves to 4 </li>
+			<li> Under b moves to 5 </li>
+			<li> Under two moves to 6 </li>
+		</ul>
+	</td>
 </tr>
 <tr>
 	<td> 1 </td>
-	<td> two -> b •  </td>
-	<td> two -> b •  </td>
-	<td>  </td>
+	<td class="list_cell">
+		<ul>
+			<li> A -> ( • A ) </li>
+			<li> A -> • ( A ) </li>
+			<li> A -> • two </li>
+			<li> two -> • a </li>
+			<li> two -> • b </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> A -> ( • A ) </li>
+			<li> A -> • ( A ) </li>
+			<li> A -> • two </li>
+			<li> two -> • a </li>
+			<li> two -> • b </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Under ( moves to 1 </li>
+			<li> Under A moves to 7 </li>
+			<li> Under a moves to 4 </li>
+			<li> Under b moves to 5 </li>
+			<li> Under two moves to 6 </li>
+		</ul>
+	</td>
 </tr>
 <tr>
 	<td> 2 </td>
-	<td> A01705249 -> goal •  </td>
-	<td> A01705249 -> goal •  </td>
-	<td>  </td>
+	<td class="list_cell">
+		<ul>
+			<li> goal -> A •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> goal -> A •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+		</ul>
+	</td>
 </tr>
 <tr>
 	<td> 3 </td>
-	<td> goal -> A •  </td>
-	<td> goal -> A •  </td>
-	<td>  </td>
+	<td class="list_cell">
+		<ul>
+			<li> A01705249 -> goal •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> A01705249 -> goal •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+		</ul>
+	</td>
 </tr>
 <tr>
 	<td> 4 </td>
-	<td> A -> ( • A ) </td>
-	<td> A -> ( • A )
-A -> • ( A )
-A -> • two
-two -> • a
-two -> • b </td>
-	<td> Under b moves to 1
-Under A moves to 7
-Under ( moves to 4
-Under a moves to 5
-Under two moves to 6 </td>
+	<td class="list_cell">
+		<ul>
+			<li> two -> a •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> two -> a •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+		</ul>
+	</td>
 </tr>
 <tr>
 	<td> 5 </td>
-	<td> two -> a •  </td>
-	<td> two -> a •  </td>
-	<td>  </td>
+	<td class="list_cell">
+		<ul>
+			<li> two -> b •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> two -> b •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+		</ul>
+	</td>
 </tr>
 <tr>
 	<td> 6 </td>
-	<td> A -> two •  </td>
-	<td> A -> two •  </td>
-	<td>  </td>
+	<td class="list_cell">
+		<ul>
+			<li> A -> two •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> A -> two •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+		</ul>
+	</td>
 </tr>
 <tr>
 	<td> 7 </td>
-	<td> A -> ( A • ) </td>
-	<td> A -> ( A • ) </td>
-	<td> Under ) moves to 8 </td>
+	<td class="list_cell">
+		<ul>
+			<li> A -> ( A • ) </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> A -> ( A • ) </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Under ) moves to 8 </li>
+		</ul>
+	</td>
 </tr>
 <tr>
 	<td> 8 </td>
-	<td> A -> ( A ) •  </td>
-	<td> A -> ( A ) •  </td>
-	<td>  </td>
+	<td class="list_cell">
+		<ul>
+			<li> A -> ( A ) •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> A -> ( A ) •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+		</ul>
+	</td>
 </tr>
 </table>
 
@@ -235,60 +346,60 @@ Under two moves to 6 </td>
 <tr>
 	<td> 0 </td>
 	<td> ( ( a ) ) $ </td>
-	<td> Shift 4 </td>
+	<td> Shift 1 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 </td>
+	<td> 0 ( 1 </td>
 	<td> ( a ) ) $ </td>
+	<td> Shift 1 </td>
+</tr>
+<tr>
+	<td> 0 ( 1 ( 1 </td>
+	<td> a ) ) $ </td>
 	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 </td>
-	<td> a ) ) $ </td>
-	<td> Shift 5 </td>
-</tr>
-<tr>
-	<td> 0 ( 4 ( 4 a 5 </td>
+	<td> 0 ( 1 ( 1 a 4 </td>
 	<td> ) ) $ </td>
 	<td> Reduce 4 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 two </td>
+	<td> 0 ( 1 ( 1 two </td>
 	<td> ) ) $ </td>
 	<td> Goto 6 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 two 6 </td>
+	<td> 0 ( 1 ( 1 two 6 </td>
 	<td> ) ) $ </td>
 	<td> Reduce 3 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 A </td>
+	<td> 0 ( 1 ( 1 A </td>
 	<td> ) ) $ </td>
 	<td> Goto 6 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 A 7 </td>
+	<td> 0 ( 1 ( 1 A 7 </td>
 	<td> ) ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 A 7 ) 8 </td>
+	<td> 0 ( 1 ( 1 A 7 ) 8 </td>
 	<td> ) $ </td>
 	<td> Reduce 2 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 A </td>
+	<td> 0 ( 1 A </td>
 	<td> ) $ </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 A 7 </td>
+	<td> 0 ( 1 A 7 </td>
 	<td> ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 A 7 ) 8 </td>
+	<td> 0 ( 1 A 7 ) 8 </td>
 	<td> $ </td>
 	<td> Reduce 2 </td>
 </tr>
@@ -298,17 +409,17 @@ Under two moves to 6 </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0 A 3 </td>
+	<td> 0 A 2 </td>
 	<td> $ </td>
 	<td> Reduce 1 </td>
 </tr>
 <tr>
 	<td> 0 goal </td>
 	<td> $ </td>
-	<td> Goto 3 </td>
+	<td> Goto 2 </td>
 </tr>
 <tr>
-	<td> 0 goal 2 </td>
+	<td> 0 goal 3 </td>
 	<td> $ </td>
 	<td> Accept </td>
 </tr>
@@ -323,120 +434,120 @@ Under two moves to 6 </td>
 <tr>
 	<td> 0 </td>
 	<td> ( ( ( ( ( b ) ) ) ) ) $ </td>
-	<td> Shift 4 </td>
-</tr>
-<tr>
-	<td> 0 ( 4 </td>
-	<td> ( ( ( ( b ) ) ) ) ) $ </td>
-	<td> Shift 4 </td>
-</tr>
-<tr>
-	<td> 0 ( 4 ( 4 </td>
-	<td> ( ( ( b ) ) ) ) ) $ </td>
-	<td> Shift 4 </td>
-</tr>
-<tr>
-	<td> 0 ( 4 ( 4 ( 4 </td>
-	<td> ( ( b ) ) ) ) ) $ </td>
-	<td> Shift 4 </td>
-</tr>
-<tr>
-	<td> 0 ( 4 ( 4 ( 4 ( 4 </td>
-	<td> ( b ) ) ) ) ) $ </td>
-	<td> Shift 4 </td>
-</tr>
-<tr>
-	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 </td>
-	<td> b ) ) ) ) ) $ </td>
 	<td> Shift 1 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 b 1 </td>
+	<td> 0 ( 1 </td>
+	<td> ( ( ( ( b ) ) ) ) ) $ </td>
+	<td> Shift 1 </td>
+</tr>
+<tr>
+	<td> 0 ( 1 ( 1 </td>
+	<td> ( ( ( b ) ) ) ) ) $ </td>
+	<td> Shift 1 </td>
+</tr>
+<tr>
+	<td> 0 ( 1 ( 1 ( 1 </td>
+	<td> ( ( b ) ) ) ) ) $ </td>
+	<td> Shift 1 </td>
+</tr>
+<tr>
+	<td> 0 ( 1 ( 1 ( 1 ( 1 </td>
+	<td> ( b ) ) ) ) ) $ </td>
+	<td> Shift 1 </td>
+</tr>
+<tr>
+	<td> 0 ( 1 ( 1 ( 1 ( 1 ( 1 </td>
+	<td> b ) ) ) ) ) $ </td>
+	<td> Shift 5 </td>
+</tr>
+<tr>
+	<td> 0 ( 1 ( 1 ( 1 ( 1 ( 1 b 5 </td>
 	<td> ) ) ) ) ) $ </td>
 	<td> Reduce 5 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 two </td>
+	<td> 0 ( 1 ( 1 ( 1 ( 1 ( 1 two </td>
 	<td> ) ) ) ) ) $ </td>
-	<td> Goto 2 </td>
+	<td> Goto 3 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 two 6 </td>
+	<td> 0 ( 1 ( 1 ( 1 ( 1 ( 1 two 6 </td>
 	<td> ) ) ) ) ) $ </td>
 	<td> Reduce 3 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 A </td>
+	<td> 0 ( 1 ( 1 ( 1 ( 1 ( 1 A </td>
 	<td> ) ) ) ) ) $ </td>
 	<td> Goto 6 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 A 7 </td>
+	<td> 0 ( 1 ( 1 ( 1 ( 1 ( 1 A 7 </td>
 	<td> ) ) ) ) ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 A 7 ) 8 </td>
+	<td> 0 ( 1 ( 1 ( 1 ( 1 ( 1 A 7 ) 8 </td>
 	<td> ) ) ) ) $ </td>
 	<td> Reduce 2 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 ( 4 A </td>
+	<td> 0 ( 1 ( 1 ( 1 ( 1 A </td>
 	<td> ) ) ) ) $ </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 ( 4 A 7 </td>
+	<td> 0 ( 1 ( 1 ( 1 ( 1 A 7 </td>
 	<td> ) ) ) ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 ( 4 A 7 ) 8 </td>
+	<td> 0 ( 1 ( 1 ( 1 ( 1 A 7 ) 8 </td>
 	<td> ) ) ) $ </td>
 	<td> Reduce 2 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 A </td>
+	<td> 0 ( 1 ( 1 ( 1 A </td>
 	<td> ) ) ) $ </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 A 7 </td>
+	<td> 0 ( 1 ( 1 ( 1 A 7 </td>
 	<td> ) ) ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 A 7 ) 8 </td>
+	<td> 0 ( 1 ( 1 ( 1 A 7 ) 8 </td>
 	<td> ) ) $ </td>
 	<td> Reduce 2 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 A </td>
+	<td> 0 ( 1 ( 1 A </td>
 	<td> ) ) $ </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 A 7 </td>
+	<td> 0 ( 1 ( 1 A 7 </td>
 	<td> ) ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 A 7 ) 8 </td>
+	<td> 0 ( 1 ( 1 A 7 ) 8 </td>
 	<td> ) $ </td>
 	<td> Reduce 2 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 A </td>
+	<td> 0 ( 1 A </td>
 	<td> ) $ </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 A 7 </td>
+	<td> 0 ( 1 A 7 </td>
 	<td> ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 A 7 ) 8 </td>
+	<td> 0 ( 1 A 7 ) 8 </td>
 	<td> $ </td>
 	<td> Reduce 2 </td>
 </tr>
@@ -446,17 +557,17 @@ Under two moves to 6 </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0 A 3 </td>
+	<td> 0 A 2 </td>
 	<td> $ </td>
 	<td> Reduce 1 </td>
 </tr>
 <tr>
 	<td> 0 goal </td>
 	<td> $ </td>
-	<td> Goto 3 </td>
+	<td> Goto 2 </td>
 </tr>
 <tr>
-	<td> 0 goal 2 </td>
+	<td> 0 goal 3 </td>
 	<td> $ </td>
 	<td> Accept </td>
 </tr>
@@ -471,40 +582,40 @@ Under two moves to 6 </td>
 <tr>
 	<td> 0 </td>
 	<td> ( a ) ) $ </td>
+	<td> Shift 1 </td>
+</tr>
+<tr>
+	<td> 0 ( 1 </td>
+	<td> a ) ) $ </td>
 	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 </td>
-	<td> a ) ) $ </td>
-	<td> Shift 5 </td>
-</tr>
-<tr>
-	<td> 0 ( 4 a 5 </td>
+	<td> 0 ( 1 a 4 </td>
 	<td> ) ) $ </td>
 	<td> Reduce 4 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 two </td>
+	<td> 0 ( 1 two </td>
 	<td> ) ) $ </td>
-	<td> Goto 2 </td>
+	<td> Goto 3 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 two 6 </td>
+	<td> 0 ( 1 two 6 </td>
 	<td> ) ) $ </td>
 	<td> Reduce 3 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 A </td>
+	<td> 0 ( 1 A </td>
 	<td> ) ) $ </td>
 	<td> Goto 6 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 A 7 </td>
+	<td> 0 ( 1 A 7 </td>
 	<td> ) ) $ </td>
 	<td> Shift 8 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 A 7 ) 8 </td>
+	<td> 0 ( 1 A 7 ) 8 </td>
 	<td> ) $ </td>
 	<td> Reduce 2 </td>
 </tr>
@@ -514,9 +625,9 @@ Under two moves to 6 </td>
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0 A 3 </td>
+	<td> 0 A 2 </td>
 	<td> ) $ </td>
-	<td> Error: a required table value (3, ")"), doesn't exist. </td>
+	<td> Error: a required table value (2, ")"), doesn't exist. </td>
 </tr>
 </table>
 
@@ -529,37 +640,37 @@ Under two moves to 6 </td>
 <tr>
 	<td> 0 </td>
 	<td> ( ( ( ( ( a b ) ) ) ) ) $ </td>
-	<td> Shift 4 </td>
+	<td> Shift 1 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 </td>
+	<td> 0 ( 1 </td>
 	<td> ( ( ( ( a b ) ) ) ) ) $ </td>
-	<td> Shift 4 </td>
+	<td> Shift 1 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 </td>
+	<td> 0 ( 1 ( 1 </td>
 	<td> ( ( ( a b ) ) ) ) ) $ </td>
-	<td> Shift 4 </td>
+	<td> Shift 1 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 </td>
+	<td> 0 ( 1 ( 1 ( 1 </td>
 	<td> ( ( a b ) ) ) ) ) $ </td>
-	<td> Shift 4 </td>
+	<td> Shift 1 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 ( 4 </td>
+	<td> 0 ( 1 ( 1 ( 1 ( 1 </td>
 	<td> ( a b ) ) ) ) ) $ </td>
+	<td> Shift 1 </td>
+</tr>
+<tr>
+	<td> 0 ( 1 ( 1 ( 1 ( 1 ( 1 </td>
+	<td> a b ) ) ) ) ) $ </td>
 	<td> Shift 4 </td>
 </tr>
 <tr>
-	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 </td>
-	<td> a b ) ) ) ) ) $ </td>
-	<td> Shift 5 </td>
-</tr>
-<tr>
-	<td> 0 ( 4 ( 4 ( 4 ( 4 ( 4 a 5 </td>
+	<td> 0 ( 1 ( 1 ( 1 ( 1 ( 1 a 4 </td>
 	<td> b ) ) ) ) ) $ </td>
-	<td> Error: a required table value (5, "b"), doesn't exist. </td>
+	<td> Error: a required table value (4, "b"), doesn't exist. </td>
 </tr>
 </table>
 
