@@ -1,232 +1,3 @@
-
-
-Item #0
--------------------------------
-Kernel: 
-A01705249 -> . C
--------------------------------
-Whole list: 
-A01705249 -> . C
-C -> . P F class id X Y
-P -> . public
-P -> . 
--------------------------------
-Transitions: 
-Under public moves to 1
-Under P moves to 2
-Under C moves to 3
-
-
-Item #1
--------------------------------
-Kernel: 
-P -> public . 
--------------------------------
-Whole list: 
-P -> public . 
--------------------------------
-Transitions: 
-
-
-Item #2
--------------------------------
-Kernel: 
-C -> P . F class id X Y
--------------------------------
-Whole list: 
-C -> P . F class id X Y
-F -> . final
-F -> . 
--------------------------------
-Transitions: 
-Under F moves to 4
-Under final moves to 5
-
-
-Item #3
--------------------------------
-Kernel: 
-A01705249 -> C . 
--------------------------------
-Whole list: 
-A01705249 -> C . 
--------------------------------
-Transitions: 
-
-
-Item #4
--------------------------------
-Kernel: 
-C -> P F . class id X Y
--------------------------------
-Whole list: 
-C -> P F . class id X Y
--------------------------------
-Transitions: 
-Under class moves to 6
-
-
-Item #5
--------------------------------
-Kernel: 
-F -> final . 
--------------------------------
-Whole list: 
-F -> final . 
--------------------------------
-Transitions: 
-
-
-Item #6
--------------------------------
-Kernel: 
-C -> P F class . id X Y
--------------------------------
-Whole list: 
-C -> P F class . id X Y
--------------------------------
-Transitions: 
-Under id moves to 7
-
-
-Item #7
--------------------------------
-Kernel: 
-C -> P F class id . X Y
--------------------------------
-Whole list: 
-C -> P F class id . X Y
-X -> . extends id
-X -> . 
--------------------------------
-Transitions: 
-Under extends moves to 8
-Under X moves to 9
-
-
-Item #8
--------------------------------
-Kernel: 
-X -> extends . id
--------------------------------
-Whole list: 
-X -> extends . id
--------------------------------
-Transitions: 
-Under id moves to 10
-
-
-Item #9
--------------------------------
-Kernel: 
-C -> P F class id X . Y
--------------------------------
-Whole list: 
-C -> P F class id X . Y
-Y -> . implements I
-Y -> . 
--------------------------------
-Transitions: 
-Under Y moves to 11
-Under implements moves to 12
-
-
-Item #10
--------------------------------
-Kernel: 
-X -> extends id . 
--------------------------------
-Whole list: 
-X -> extends id . 
--------------------------------
-Transitions: 
-
-
-Item #11
--------------------------------
-Kernel: 
-C -> P F class id X Y . 
--------------------------------
-Whole list: 
-C -> P F class id X Y . 
--------------------------------
-Transitions: 
-
-
-Item #12
--------------------------------
-Kernel: 
-Y -> implements . I
--------------------------------
-Whole list: 
-Y -> implements . I
-I -> . id J
--------------------------------
-Transitions: 
-Under I moves to 13
-Under id moves to 14
-
-
-Item #13
--------------------------------
-Kernel: 
-Y -> implements I . 
--------------------------------
-Whole list: 
-Y -> implements I . 
--------------------------------
-Transitions: 
-
-
-Item #14
--------------------------------
-Kernel: 
-I -> id . J
--------------------------------
-Whole list: 
-I -> id . J
-J -> . , I
-J -> . 
--------------------------------
-Transitions: 
-Under J moves to 15
-Under , moves to 16
-
-
-Item #15
--------------------------------
-Kernel: 
-I -> id J . 
--------------------------------
-Whole list: 
-I -> id J . 
--------------------------------
-Transitions: 
-
-
-Item #16
--------------------------------
-Kernel: 
-J -> , . I
--------------------------------
-Whole list: 
-J -> , . I
-I -> . id J
--------------------------------
-Transitions: 
-Under I moves to 17
-Under id moves to 14
-
-
-Item #17
--------------------------------
-Kernel: 
-J -> , I . 
--------------------------------
-Whole list: 
-J -> , I . 
--------------------------------
-Transitions: 
 <!DOCTYPE html>
 <html>
 <head>
@@ -234,6 +5,7 @@ Transitions:
 	<title> SLR table </title>
 </head>
 <body>
+<h1>SLR analysis table</h1>
 <table>
 <tr>
 	<th> </th>
@@ -265,9 +37,9 @@ Transitions:
 	<td> R3 </td>
 	<td>  </td>
 	<td>  </td>
-	<td> S1 </td>
+	<td> S3 </td>
 	<td>  </td>
-	<td> 3 </td>
+	<td> 1 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -277,42 +49,6 @@ Transitions:
 </tr>
 <tr>
 	<td> 1 </td>
-	<td>  </td>
-	<td> R2 </td>
-	<td>  </td>
-	<td> R2 </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-</tr>
-<tr>
-	<td> 2 </td>
-	<td>  </td>
-	<td> R5 </td>
-	<td>  </td>
-	<td> S5 </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td> 4 </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-</tr>
-<tr>
-	<td> 3 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -330,9 +66,45 @@ Transitions:
 	<td>  </td>
 </tr>
 <tr>
+	<td> 2 </td>
+	<td>  </td>
+	<td> R5 </td>
+	<td>  </td>
+	<td> S4 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> 5 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 3 </td>
+	<td>  </td>
+	<td> R2 </td>
+	<td>  </td>
+	<td> R2 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
 	<td> 4 </td>
 	<td>  </td>
-	<td> S6 </td>
+	<td> R4 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -350,7 +122,7 @@ Transitions:
 <tr>
 	<td> 5 </td>
 	<td>  </td>
-	<td> R4 </td>
+	<td> S6 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -387,7 +159,7 @@ Transitions:
 	<td> 7 </td>
 	<td>  </td>
 	<td>  </td>
-	<td> S8 </td>
+	<td> S9 </td>
 	<td>  </td>
 	<td>  </td>
 	<td> R7 </td>
@@ -398,7 +170,7 @@ Transitions:
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
-	<td> 9 </td>
+	<td> 8 </td>
 	<td>  </td>
 </tr>
 <tr>
@@ -407,26 +179,8 @@ Transitions:
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
-	<td> S10 </td>
 	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-</tr>
-<tr>
-	<td> 9 </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td> S12 </td>
+	<td> S11 </td>
 	<td>  </td>
 	<td> R9 </td>
 	<td>  </td>
@@ -435,28 +189,28 @@ Transitions:
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
-	<td> 11 </td>
+	<td> 10 </td>
+</tr>
+<tr>
+	<td> 9 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> S12 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
 </tr>
 <tr>
 	<td> 10 </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td> R6 </td>
-	<td>  </td>
-	<td> R6 </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-</tr>
-<tr>
-	<td> 11 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -474,33 +228,33 @@ Transitions:
 	<td>  </td>
 </tr>
 <tr>
+	<td> 11 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> S13 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> 14 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
 	<td> 12 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
-	<td> S14 </td>
 	<td>  </td>
+	<td> R6 </td>
 	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td> 13 </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-</tr>
-<tr>
-	<td> 13 </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td>  </td>
-	<td> R8 </td>
+	<td> R6 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -510,7 +264,7 @@ Transitions:
 	<td>  </td>
 </tr>
 <tr>
-	<td> 14 </td>
+	<td> 13 </td>
 	<td> S16 </td>
 	<td>  </td>
 	<td>  </td>
@@ -523,6 +277,24 @@ Transitions:
 	<td>  </td>
 	<td>  </td>
 	<td> 15 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+</tr>
+<tr>
+	<td> 14 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td> R8 </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
+	<td>  </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -551,7 +323,7 @@ Transitions:
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
-	<td> S14 </td>
+	<td> S13 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -582,34 +354,518 @@ Transitions:
 	<td>  </td>
 </tr>
 </table>
+
+<h1>Input string parse results</h1>
+<table>
+<tr>
+	<th> Input string </th>
+	<th> Parse result </th>
+</tr>
+<tr>
+	<td> public class id implements id , id </td>
+	<td> Accepted. </td>
+</tr>
+</table>
+
+<h1>SLR tree item data</h1>
+<table>
+<tr>
+	<th> Item </th>
+	<th> Kernel </th>
+	<th> Whole list </th>
+	<th> Transitions </th>
+</tr>
+<tr>
+	<td> 0 </td>
+	<td class="list_cell">
+		<ul>
+			<li> A01705249 -> • C </li>
+			<li> C -> • P F class id X Y </li>
+			<li> P -> • public </li>
+			<li> P -> •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> A01705249 -> • C </li>
+			<li> C -> • P F class id X Y </li>
+			<li> P -> • public </li>
+			<li> P -> •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Under C moves to 1 </li>
+			<li> Under P moves to 2 </li>
+			<li> Under public moves to 3 </li>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 1 </td>
+	<td class="list_cell">
+		<ul>
+			<li> A01705249 -> C •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> A01705249 -> C •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 2 </td>
+	<td class="list_cell">
+		<ul>
+			<li> C -> P • F class id X Y </li>
+			<li> F -> • final </li>
+			<li> F -> •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> C -> P • F class id X Y </li>
+			<li> F -> • final </li>
+			<li> F -> •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Under final moves to 4 </li>
+			<li> Under F moves to 5 </li>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 3 </td>
+	<td class="list_cell">
+		<ul>
+			<li> P -> public •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> P -> public •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 4 </td>
+	<td class="list_cell">
+		<ul>
+			<li> F -> final •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> F -> final •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 5 </td>
+	<td class="list_cell">
+		<ul>
+			<li> C -> P F • class id X Y </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> C -> P F • class id X Y </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Under class moves to 6 </li>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 6 </td>
+	<td class="list_cell">
+		<ul>
+			<li> C -> P F class • id X Y </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> C -> P F class • id X Y </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Under id moves to 7 </li>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 7 </td>
+	<td class="list_cell">
+		<ul>
+			<li> C -> P F class id • X Y </li>
+			<li> X -> • extends id </li>
+			<li> X -> •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> C -> P F class id • X Y </li>
+			<li> X -> • extends id </li>
+			<li> X -> •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Under X moves to 8 </li>
+			<li> Under extends moves to 9 </li>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 8 </td>
+	<td class="list_cell">
+		<ul>
+			<li> C -> P F class id X • Y </li>
+			<li> Y -> • implements I </li>
+			<li> Y -> •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> C -> P F class id X • Y </li>
+			<li> Y -> • implements I </li>
+			<li> Y -> •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Under Y moves to 10 </li>
+			<li> Under implements moves to 11 </li>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 9 </td>
+	<td class="list_cell">
+		<ul>
+			<li> X -> extends • id </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> X -> extends • id </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Under id moves to 12 </li>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 10 </td>
+	<td class="list_cell">
+		<ul>
+			<li> C -> P F class id X Y •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> C -> P F class id X Y •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 11 </td>
+	<td class="list_cell">
+		<ul>
+			<li> Y -> implements • I </li>
+			<li> I -> • id J </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Y -> implements • I </li>
+			<li> I -> • id J </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Under id moves to 13 </li>
+			<li> Under I moves to 14 </li>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 12 </td>
+	<td class="list_cell">
+		<ul>
+			<li> X -> extends id •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> X -> extends id •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 13 </td>
+	<td class="list_cell">
+		<ul>
+			<li> I -> id • J </li>
+			<li> J -> • , I </li>
+			<li> J -> •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> I -> id • J </li>
+			<li> J -> • , I </li>
+			<li> J -> •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Under J moves to 15 </li>
+			<li> Under , moves to 16 </li>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 14 </td>
+	<td class="list_cell">
+		<ul>
+			<li> Y -> implements I •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Y -> implements I •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 15 </td>
+	<td class="list_cell">
+		<ul>
+			<li> I -> id J •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> I -> id J •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 16 </td>
+	<td class="list_cell">
+		<ul>
+			<li> J -> , • I </li>
+			<li> I -> • id J </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> J -> , • I </li>
+			<li> I -> • id J </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> Under id moves to 13 </li>
+			<li> Under I moves to 17 </li>
+		</ul>
+	</td>
+</tr>
+<tr>
+	<td> 17 </td>
+	<td class="list_cell">
+		<ul>
+			<li> J -> , I •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+			<li> J -> , I •  </li>
+		</ul>
+	</td>
+	<td class="list_cell">
+		<ul>
+		</ul>
+	</td>
+</tr>
+</table>
+
+<h1>Parse process for string #1</h1>
+<table>
+<tr>
+	<th> Stack </th>
+	<th> String </th>
+	<th> Action to perform </th>
+</tr>
+<tr>
+	<td> 0 </td>
+	<td> public class id implements id , id $ </td>
+	<td> Shift 3 </td>
+</tr>
+<tr>
+	<td> 0 public 3 </td>
+	<td> class id implements id , id $ </td>
+	<td> Reduce 2 </td>
+</tr>
+<tr>
+	<td> 0 P </td>
+	<td> class id implements id , id $ </td>
+	<td> Goto 17 </td>
+</tr>
+<tr>
+	<td> 0 P 2 </td>
+	<td> class id implements id , id $ </td>
+	<td> Reduce 5 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F </td>
+	<td> class id implements id , id $ </td>
+	<td> Goto 2 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 </td>
+	<td> class id implements id , id $ </td>
+	<td> Shift 6 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 </td>
+	<td> id implements id , id $ </td>
+	<td> Shift 7 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 </td>
+	<td> implements id , id $ </td>
+	<td> Reduce 7 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X </td>
+	<td> implements id , id $ </td>
+	<td> Goto 5 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 </td>
+	<td> implements id , id $ </td>
+	<td> Shift 11 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 implements 11 </td>
+	<td> id , id $ </td>
+	<td> Shift 13 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 implements 11 id 13 </td>
+	<td> , id $ </td>
+	<td> Shift 16 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 implements 11 id 13 , 16 </td>
+	<td> id $ </td>
+	<td> Shift 13 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 implements 11 id 13 , 16 id 13 </td>
+	<td> $ </td>
+	<td> Reduce 12 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 implements 11 id 13 , 16 id 13 J </td>
+	<td> $ </td>
+	<td> Goto 8 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 implements 11 id 13 , 16 id 13 J 15 </td>
+	<td> $ </td>
+	<td> Reduce 10 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 implements 11 id 13 , 16 I </td>
+	<td> $ </td>
+	<td> Goto 15 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 implements 11 id 13 , 16 I 17 </td>
+	<td> $ </td>
+	<td> Reduce 11 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 implements 11 id 13 J </td>
+	<td> $ </td>
+	<td> Goto 17 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 implements 11 id 13 J 15 </td>
+	<td> $ </td>
+	<td> Reduce 10 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 implements 11 I </td>
+	<td> $ </td>
+	<td> Goto 15 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 implements 11 I 14 </td>
+	<td> $ </td>
+	<td> Reduce 8 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 Y </td>
+	<td> $ </td>
+	<td> Goto 14 </td>
+</tr>
+<tr>
+	<td> 0 P 2 F 5 class 6 id 7 X 8 Y 10 </td>
+	<td> $ </td>
+	<td> Reduce 1 </td>
+</tr>
+<tr>
+	<td> 0 C </td>
+	<td> $ </td>
+	<td> Goto 10 </td>
+</tr>
+<tr>
+	<td> 0 C 1 </td>
+	<td> $ </td>
+	<td> Accept </td>
+</tr>
+</table>
+
 </body>
 </html>
 
-
-checking string public class id implements id , id:
-shift 1
-reduce 2
-goto 2
-reduce 5
-goto 4
-shift 6
-shift 7
-reduce 7
-goto 9
-shift 12
-shift 14
-shift 16
-shift 14
-reduce 12
-goto 15
-reduce 10
-goto 17
-reduce 11
-goto 15
-reduce 10
-goto 13
-reduce 8
-goto 11
-reduce 1
-goto 3
-string public class id implements id , id accepted

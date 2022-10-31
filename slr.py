@@ -1,9 +1,10 @@
 # Generates a SLR analysis table and uses it to try and parse strings
+# The results are printed as tables in an HTML document
 
-# usage: $python SLR.py < <input file>
+# usage: $python SLR.py < <input file> > <output file>
 
 # Author: Adolfo Acosta Castro [A01705249]
-# Date: 2022/10/30
+# Date: 2022/10/31
 
 import sys
 
@@ -230,11 +231,11 @@ def propagateFollowsSeeds(nonTerminal, seeds):
     for node in reverseFollowsDependencies[nonTerminal]:
         propagateFollowsSeeds(node, seeds)
 
-def insertIntoDict(aDict, key, value):
-    if not key in aDict.keys():
-        aDict[key] = value
+def insertIntoDict(dictArray, index, key, value):
+    if not key in dictArray[index].keys():
+        dictArray[index][key] = value
     else:
-        sys.exit(f"Error: overlap in SLR table cell.")
+        sys.exit(f"Error: overlap in SLR table cell ({index}, \"{key}\").")
 
 def retrieveFromDict(dictArray, index, key):
     if key in dictArray[index].keys():
@@ -601,10 +602,10 @@ for itemIndex in range(len(itemKernels)):
             productionIndex = productions.index(production)
             
             if productionIndex == 0:
-                insertIntoDict(itemActions[itemIndex], EOF, (ACCEPT, None))
+                insertIntoDict(itemActions, itemIndex, EOF, (ACCEPT, None))
             else:
                 for follow in follows[header(production)]:
-                    insertIntoDict(itemActions[itemIndex], follow, (REDUCE, productionIndex))
+                    insertIntoDict(itemActions, itemIndex, follow, (REDUCE, productionIndex))
                
 
 #---------------------------------------------------------------
