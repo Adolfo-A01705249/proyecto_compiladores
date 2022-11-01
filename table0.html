@@ -27,11 +27,11 @@
 	<td> S5 </td>
 	<td>  </td>
 	<td> S1 </td>
-	<td> S2 </td>
+	<td> S6 </td>
 	<td>  </td>
-	<td> 3 </td>
+	<td> 2 </td>
 	<td> 4 </td>
-	<td> 6 </td>
+	<td> 3 </td>
 </tr>
 <tr>
 	<td> 1 </td>
@@ -47,10 +47,10 @@
 <tr>
 	<td> 2 </td>
 	<td>  </td>
-	<td> R5 </td>
 	<td>  </td>
 	<td>  </td>
-	<td> R5 </td>
+	<td>  </td>
+	<td> R1 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -58,10 +58,10 @@
 <tr>
 	<td> 3 </td>
 	<td>  </td>
+	<td> R3 </td>
 	<td>  </td>
 	<td>  </td>
-	<td>  </td>
-	<td> R1 </td>
+	<td> R3 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -82,19 +82,19 @@
 	<td> S5 </td>
 	<td>  </td>
 	<td> S1 </td>
-	<td> S2 </td>
+	<td> S6 </td>
 	<td>  </td>
 	<td> 7 </td>
 	<td>  </td>
-	<td> 6 </td>
+	<td> 3 </td>
 </tr>
 <tr>
 	<td> 6 </td>
 	<td>  </td>
-	<td> R3 </td>
+	<td> R5 </td>
 	<td>  </td>
 	<td>  </td>
-	<td> R3 </td>
+	<td> R5 </td>
 	<td>  </td>
 	<td>  </td>
 	<td>  </td>
@@ -139,7 +139,7 @@
 </tr>
 <tr>
 	<td> ( a ) ) </td>
-	<td> Unaccepted. Error: a required table value (3, ")"), doesn't exist. </td>
+	<td> Unaccepted. Error: a required table value (2, ")"), doesn't exist. </td>
 </tr>
 <tr>
 	<td> ( ( ( ( ( a b ) ) ) ) ) </td>
@@ -180,11 +180,11 @@
 	<td class="list_cell">
 		<ul>
 			<li> Under a moves to 1 </li>
-			<li> Under b moves to 2 </li>
-			<li> Under A moves to 3 </li>
+			<li> Under A moves to 2 </li>
+			<li> Under two moves to 3 </li>
 			<li> Under goal moves to 4 </li>
 			<li> Under ( moves to 5 </li>
-			<li> Under two moves to 6 </li>
+			<li> Under b moves to 6 </li>
 		</ul>
 	</td>
 </tr>
@@ -209,12 +209,12 @@
 	<td> 2 </td>
 	<td class="list_cell">
 		<ul>
-			<li> two -> b •  </li>
+			<li> goal -> A •  </li>
 		</ul>
 	</td>
 	<td class="list_cell">
 		<ul>
-			<li> two -> b •  </li>
+			<li> goal -> A •  </li>
 		</ul>
 	</td>
 	<td class="list_cell">
@@ -226,12 +226,12 @@
 	<td> 3 </td>
 	<td class="list_cell">
 		<ul>
-			<li> goal -> A •  </li>
+			<li> A -> two •  </li>
 		</ul>
 	</td>
 	<td class="list_cell">
 		<ul>
-			<li> goal -> A •  </li>
+			<li> A -> two •  </li>
 		</ul>
 	</td>
 	<td class="list_cell">
@@ -279,10 +279,10 @@
 	<td class="list_cell">
 		<ul>
 			<li> Under a moves to 1 </li>
-			<li> Under b moves to 2 </li>
 			<li> Under A moves to 7 </li>
+			<li> Under two moves to 3 </li>
 			<li> Under ( moves to 5 </li>
-			<li> Under two moves to 6 </li>
+			<li> Under b moves to 6 </li>
 		</ul>
 	</td>
 </tr>
@@ -290,12 +290,12 @@
 	<td> 6 </td>
 	<td class="list_cell">
 		<ul>
-			<li> A -> two •  </li>
+			<li> two -> b •  </li>
 		</ul>
 	</td>
 	<td class="list_cell">
 		<ul>
-			<li> A -> two •  </li>
+			<li> two -> b •  </li>
 		</ul>
 	</td>
 	<td class="list_cell">
@@ -370,17 +370,17 @@
 <tr>
 	<td> 0 ( 5 ( 5 two </td>
 	<td> ) ) $ </td>
-	<td> Goto 6 </td>
+	<td> Goto 3 </td>
 </tr>
 <tr>
-	<td> 0 ( 5 ( 5 two 6 </td>
+	<td> 0 ( 5 ( 5 two 3 </td>
 	<td> ) ) $ </td>
 	<td> Reduce 3 </td>
 </tr>
 <tr>
 	<td> 0 ( 5 ( 5 A </td>
 	<td> ) ) $ </td>
-	<td> Goto 6 </td>
+	<td> Goto 3 </td>
 </tr>
 <tr>
 	<td> 0 ( 5 ( 5 A 7 </td>
@@ -413,14 +413,14 @@
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0 A 3 </td>
+	<td> 0 A 2 </td>
 	<td> $ </td>
 	<td> Reduce 1 </td>
 </tr>
 <tr>
 	<td> 0 goal </td>
 	<td> $ </td>
-	<td> Goto 3 </td>
+	<td> Goto 2 </td>
 </tr>
 <tr>
 	<td> 0 goal 4 </td>
@@ -464,10 +464,10 @@
 <tr>
 	<td> 0 ( 5 ( 5 ( 5 ( 5 ( 5 </td>
 	<td> b ) ) ) ) ) $ </td>
-	<td> Shift 2 </td>
+	<td> Shift 6 </td>
 </tr>
 <tr>
-	<td> 0 ( 5 ( 5 ( 5 ( 5 ( 5 b 2 </td>
+	<td> 0 ( 5 ( 5 ( 5 ( 5 ( 5 b 6 </td>
 	<td> ) ) ) ) ) $ </td>
 	<td> Reduce 5 </td>
 </tr>
@@ -477,14 +477,14 @@
 	<td> Goto 4 </td>
 </tr>
 <tr>
-	<td> 0 ( 5 ( 5 ( 5 ( 5 ( 5 two 6 </td>
+	<td> 0 ( 5 ( 5 ( 5 ( 5 ( 5 two 3 </td>
 	<td> ) ) ) ) ) $ </td>
 	<td> Reduce 3 </td>
 </tr>
 <tr>
 	<td> 0 ( 5 ( 5 ( 5 ( 5 ( 5 A </td>
 	<td> ) ) ) ) ) $ </td>
-	<td> Goto 6 </td>
+	<td> Goto 3 </td>
 </tr>
 <tr>
 	<td> 0 ( 5 ( 5 ( 5 ( 5 ( 5 A 7 </td>
@@ -562,14 +562,14 @@
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0 A 3 </td>
+	<td> 0 A 2 </td>
 	<td> $ </td>
 	<td> Reduce 1 </td>
 </tr>
 <tr>
 	<td> 0 goal </td>
 	<td> $ </td>
-	<td> Goto 3 </td>
+	<td> Goto 2 </td>
 </tr>
 <tr>
 	<td> 0 goal 4 </td>
@@ -606,14 +606,14 @@
 	<td> Goto 4 </td>
 </tr>
 <tr>
-	<td> 0 ( 5 two 6 </td>
+	<td> 0 ( 5 two 3 </td>
 	<td> ) ) $ </td>
 	<td> Reduce 3 </td>
 </tr>
 <tr>
 	<td> 0 ( 5 A </td>
 	<td> ) ) $ </td>
-	<td> Goto 6 </td>
+	<td> Goto 3 </td>
 </tr>
 <tr>
 	<td> 0 ( 5 A 7 </td>
@@ -631,9 +631,9 @@
 	<td> Goto 7 </td>
 </tr>
 <tr>
-	<td> 0 A 3 </td>
+	<td> 0 A 2 </td>
 	<td> ) $ </td>
-	<td> Error: a required table value (3, ")"), doesn't exist. </td>
+	<td> Error: a required table value (2, ")"), doesn't exist. </td>
 </tr>
 </table>
 

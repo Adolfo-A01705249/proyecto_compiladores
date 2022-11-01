@@ -570,7 +570,7 @@ while not itemQueue.empty():
     itemProductions.append([])
     for productionWithDot in itemKernels[itemIndex]:
         itemProductions[itemIndex].append(productionWithDot)
-    treeCellValues.append(itemProductions[itemIndex])
+    treeCellValues.append(itemKernels[itemIndex])
 
     # Add productions of non-terminals with dot before them to item
     i = 0
